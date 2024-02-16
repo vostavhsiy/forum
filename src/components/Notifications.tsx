@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { setNewMessage } from "@/store/messenger/reducer";
 
-export const socket = io(String(process.env.SOCKET_URL));
+export const socket = io(String(process.env.NEXT_PUBLIC_SOCKET_URL));
 
 const Notifications: FC<{ id: string }> = ({ id }) => {
   const dispatch = useAppDispatch();
