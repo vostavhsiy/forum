@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function handler(req: NextRequest) {
+export async function GET(req: NextRequest) {
   const { page, search, size, filter } = await req.json();
   const options = {
     page: page || 0,
@@ -73,5 +73,3 @@ export async function handler(req: NextRequest) {
     return NextResponse.json({ ok: false, error: err.message });
   }
 }
-
-export { handler as GET, handler as POST };
