@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/actions/auth.actions";
+import { IUser } from "@/types/IUser";
 
 export const getUsers = async (page = 0, search?: string, size = 8) => {
   try {

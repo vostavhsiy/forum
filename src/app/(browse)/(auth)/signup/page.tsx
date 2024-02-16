@@ -1,8 +1,5 @@
-import { GoogleButton } from "@/components/GoogleButton";
-import { LoginForm } from "@/app/(browse)/(auth)/_components/LoginForm";
 import { Separator } from "@/components/ui/separator";
 import { SignUpForm } from "@/app/(browse)/(auth)/_components/SignUpForm";
-import Link from "next/link";
 import { LoaderLink } from "@/components/LoaderLink";
 
 const SignUpPage = () => {

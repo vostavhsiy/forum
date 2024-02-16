@@ -37,20 +37,29 @@ export const SignUpForm = () => {
     if (file.current?.files && file.current.files[0]) {
       data.set("image", file.current.files[0]);
     }
-    try {
-      startTransition(() => {
-        signUp(data).then((res) => {
-          if (res?.ok) {
-            router.push("/login");
-          } else {
-            toast.error(res.error);
-          }
-        });
+    startTransition(() => {
+      signUp(data).then((res) => {
+        if (res?.ok) {
+          router.push("/login");
+        } else {
+          toast.error(res.error);
+        }
       });
-    } catch (e) {
-      const err = e as Error;
-      console.log(err.message);
-    }
+    });
+    // try {
+    //   startTransition(() => {
+    //     signUp(data).then((res) => {
+    //       if (res?.ok) {
+    //         router.push("/login");
+    //       } else {
+    //         toast.error(res.error);
+    //       }
+    //     });
+    //   });
+    // } catch (e) {
+    //   const err = e as Error;
+    //   console.log(err.message);
+    // }
   };
 
   return (

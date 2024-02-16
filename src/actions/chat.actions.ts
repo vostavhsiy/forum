@@ -8,6 +8,7 @@ import {
   uploadMessageImage,
   uploadUserAvatar,
 } from "@/services/files.services";
+import { Conversation } from "@prisma/client";
 
 export const getConversations = async () => {
   const session = await getServerSession(authConfig);

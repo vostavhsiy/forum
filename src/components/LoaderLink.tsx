@@ -5,7 +5,7 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader } from "@/components/Loader";
 
-const LoaderLink = (props: any) => {
+export const LoaderLink = (props: any) => {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
@@ -26,5 +26,3 @@ const LoaderLink = (props: any) => {
     </>
   );
 };
-
-export { LoaderLink };

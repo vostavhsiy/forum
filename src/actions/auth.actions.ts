@@ -3,7 +3,6 @@
 import { prisma } from "@/lib/prisma";
 import { SHA256 as sha256 } from "crypto-js";
 import { revalidatePath } from "next/cache";
-import { signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/configs/AuthConfig";
 import { uploadUserAvatar } from "@/services/files.services";
