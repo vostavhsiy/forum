@@ -12,10 +12,12 @@ const LoginPage = () => {
       }
     >
       <h1 className="mb-6 text-2xl font-semibold">Вход</h1>
-      {/*<GoogleButton variant={"outline"} size={"lg"} className="text-lg" />*/}
-      {/*<GithubButton variant={"outline"} size={"lg"} className="text-lg" />*/}
+      <GoogleButton variant={"outline"} size={"lg"} className="text-lg" />
+      <GithubButton variant={"outline"} size={"lg"} className="text-lg" />
       <Separator className="my-8" />
-      <div className="w-full">{/*<LoginForm />*/}</div>
+      <div className="w-full">
+        <LoginForm />
+      </div>
       <div className="mt-6">
         Нет даже аккаунта Google?{" "}
         <LoaderLink href={"/signup"} className={"text-destructive"}>

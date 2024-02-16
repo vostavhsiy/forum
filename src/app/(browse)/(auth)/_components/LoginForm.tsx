@@ -5,7 +5,7 @@ import { FormikInput } from "@/components/FormikInput";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useTransition } from "react";
+import { useTransition } from "react";
 import { revalidate } from "@/actions/auth.actions";
 import { toast } from "sonner";
 
@@ -62,36 +62,34 @@ export const LoginForm = () => {
   };
 
   return (
-    <Suspense>
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={submitHandler}
-      >
-        {({ errors }) => (
-          <Form className="flex flex-col items-center gap-3 w-full">
-            <FormikInput name={"email"} type={"email"} placeholder={"Почта"} />
-            <FormikInput
-              name={"password"}
-              type={"password"}
-              placeholder={"Пароль"}
-            />
-            {errors.email && (
-              <div className="text-base text-destructive">{errors.email}</div>
-            )}
-            <Button
-              disabled={isPending}
-              type={"submit"}
-              size={"lg"}
-              className={"text-lg w-full mt-5"}
-            >
-              Войти
-            </Button>
-            {searchParams.get("error") && (
-              <h3 className="text-destructive">Неправильные данные!</h3>
-            )}
-          </Form>
-        )}
-      </Formik>
-    </Suspense>
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      onSubmit={submitHandler}
+    >
+      {({ errors }) => (
+        <Form className="flex flex-col items-center gap-3 w-full">
+          <FormikInput name={"email"} type={"email"} placeholder={"Почта"} />
+          <FormikInput
+            name={"password"}
+            type={"password"}
+            placeholder={"Пароль"}
+          />
+          {errors.email && (
+            <div className="text-base text-destructive">{errors.email}</div>
+          )}
+          <Button
+            disabled={isPending}
+            type={"submit"}
+            size={"lg"}
+            className={"text-lg w-full mt-5"}
+          >
+            Войти
+          </Button>
+          {searchParams.get("error") && (
+            <h3 className="text-destructive">Неправильные данные!</h3>
+          )}
+        </Form>
+      )}
+    </Formik>
   );
 };
