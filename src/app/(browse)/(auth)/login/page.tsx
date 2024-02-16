@@ -12,7 +12,7 @@ const LoginPage = () => {
       }
     >
       <h1 className="mb-6 text-2xl font-semibold">Вход</h1>
-      <GoogleButton variant={"outline"} size={"lg"} className="text-lg" />
+      {/*<GoogleButton variant={"outline"} size={"lg"} className="text-lg" />*/}
       <GithubButton variant={"outline"} size={"lg"} className="text-lg" />
       <Separator className="my-8" />
       <div className="w-full">
