@@ -8,11 +8,11 @@ import { authConfig } from "@/lib/configs/AuthConfig";
 import { uploadUserAvatar } from "@/services/files.services";
 
 export const auth = async () => {
+  const session = await getServerSession(authConfig);
+  if (!session?.user) {
+    return null;
+  }
   try {
-    const session = await getServerSession(authConfig);
-    if (!session?.user) {
-      return null;
-    }
     const user = await prisma.user.findUnique({
       where: {
         id: session.user.id,
