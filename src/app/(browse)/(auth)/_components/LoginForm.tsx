@@ -28,7 +28,7 @@ export const LoginForm = () => {
       signIn("credentials", {
         email: values.email,
         password: values.password,
-        // callbackUrl,
+        callbackUrl,
       }).then((res) => {
         if (res?.ok) {
           revalidate(["/"]).then((res) => {
