@@ -28,7 +28,7 @@ const Sidebar = async () => {
           return <SidebarUserCard user={u} key={u.id} />;
         })}
       </div>
-      <div className="w-full flex flex-col gap-4 h-full overflow-auto">
+      <div className="w-full flex flex-col gap-4 h-full overflow-hidden overflow-y-auto">
         {conversations.map((conversation) => {
           return (
             <SidebarConversationCard
