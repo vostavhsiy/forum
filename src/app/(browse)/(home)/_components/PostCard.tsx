@@ -45,8 +45,8 @@ const Post: FC<Props> = ({ post, auth, favourite }) => {
   return (
     <div className="w-full p-5 rounded-2xl border border-primary/20 bg-background/60 flex flex-col gap-8">
       <div className="w-full flex items-center justify-between gap-2">
-        <div className="flex flex-col gap-2">
-          {/*<Loader />*/}
+        <div className="flex flex-col gap-4">
+          Ё
           <div className="flex items-center justify-between gap-4">
             <LoaderLink
               href={`/post/${post.id}`}
