@@ -1,42 +1,73 @@
 "use client";
 
 import React, { FC, useTransition } from "react";
-import { Button } from "@/components/ui/button";
-import { HeartCrack, Heart, Trash } from "lucide-react";
-import {
-  addPostView,
-  deletePost,
-  dislikePost,
-  likePost,
-} from "@/actions/blog.actions";
+import { addPostView, dislikePost, likePost } from "@/actions/blog.actions";
 import Image from "next/image";
-import Link from "next/link";
 import { Tag } from "@prisma/client";
-import { toast } from "sonner";
-import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
 import { ends } from "@/lib/word-ends";
 import { LoaderLink } from "@/components/LoaderLink";
-import { Loader } from "@/components/Loader";
+import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
+import { Heart, HeartCrack } from "lucide-react";
 
 interface Props {
   post: any;
+  auth?: string;
+  favourite?: boolean;
 }
 
-const Post: FC<Props> = ({ post }) => {
+const Post: FC<Props> = ({ post, auth, favourite }) => {
+  const [isPending, startTransition] = useTransition();
+
+  const clickHandler = () => {
+    if (!auth) {
+      return;
+    }
+    if (favourite) {
+      startTransition(() => {
+        dislikePost(post.id).then((res) => {
+          if (res.ok) {
+          } else {
+          }
+        });
+      });
+    } else {
+      startTransition(() => {
+        likePost(post.id).then((res) => {
+          if (res.ok) {
+          } else {
+          }
+        });
+      });
+    }
+  };
+
   return (
     <div className="w-full p-5 rounded-2xl border border-primary/20 bg-background/60 flex flex-col gap-8">
       <div className="w-full flex items-center justify-between gap-2">
         <div className="flex flex-col gap-2">
           {/*<Loader />*/}
-          <LoaderLink
-            href={`/post/${post.id}`}
-            className="text-xl"
-            onClick={async () => {
-              await addPostView(post.id);
-            }}
-          >
-            {post.title}
-          </LoaderLink>
+          <div className="flex items-center justify-between gap-4">
+            <LoaderLink
+              href={`/post/${post.id}`}
+              className="text-xl"
+              onClick={async () => {
+                await addPostView(post.id);
+              }}
+            >
+              {post.title}
+            </LoaderLink>
+            {auth && (
+              <Button
+                disabled={isPending}
+                variant={favourite ? "destructive" : "secondary"}
+                size={"icon"}
+                onClick={clickHandler}
+              >
+                {favourite ? <HeartCrack /> : <Heart />}
+              </Button>
+            )}
+          </div>
           <h3 className="text-sm text-zinc-600">
             {post.text.slice(0, 200)}...
           </h3>

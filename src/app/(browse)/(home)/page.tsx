@@ -5,10 +5,15 @@ import { getPosts } from "@/services/posts.service";
 import { Post } from "@/app/(browse)/(home)/_components/PostCard";
 import { cn } from "@/lib/utils";
 import { Satisfy } from "next/font/google";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/lib/configs/AuthConfig";
+import { auth } from "@/actions/auth.actions";
 
 const satisfy = Satisfy({ subsets: ["latin"], weight: ["400"] });
 
 export default async function Home() {
+  const user = await auth();
+
   const { posts, total } = await getPosts(0, "", 3, "new");
 
   return (
@@ -140,7 +145,16 @@ export default async function Home() {
               <h2 className="font-semibold">Последние несколько постов</h2>
               <div className="w-full flex flex-col gap-3">
                 {posts.map((post) => {
-                  return <Post key={post.id} post={post} />;
+                  return (
+                    <Post
+                      key={post.id}
+                      post={post}
+                      auth={user?.id}
+                      favourite={
+                        !!user?.favourites.find((fav) => fav.id === post.id)
+                      }
+                    />
+                  );
                 })}
               </div>
             </>
