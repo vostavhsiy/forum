@@ -117,23 +117,20 @@ export const downloadMessageFile = async (url: string) => {
 };
 
 export const download = async (url: string) => {
-  await fetch(url, { mode: "no-cors" })
-    .then((response) => response.blob())
-    .then((file) => {
-      const raw = atob(String(file));
-      const binaryData = new Uint8Array(new ArrayBuffer(raw.length));
-      for (let i = 0; i < raw.length; i++) {
-        binaryData[i] = raw.charCodeAt(i);
-      }
-      const blob = new Blob([binaryData], {
-        type: file.type,
-      });
-      let link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = url.split("---").slice(-1)[0];
-      link.click();
-    })
-    .catch(console.error);
+  try {
+    const res = await fetch(url, { mode: "no-cors" });
+    const file = await res.blob();
+    const binaryData = await file.arrayBuffer();
+    const blob = new Blob([binaryData], {
+      type: file.type,
+    });
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = url.split("---").slice(-1)[0];
+    link.click();
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 // export const download = async (url: string) => {
