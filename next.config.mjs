@@ -7,14 +7,6 @@ const nextConfig = {
     },
     experimental: {
         missingSuspenseWithCSRBailout: false
-    },
-    webpack: (config, { isServer }) => {
-        if (!isServer) {
-            config.node = {
-                fs: 'empty'
-            }
-        }
-        return config
     }
 };
 
