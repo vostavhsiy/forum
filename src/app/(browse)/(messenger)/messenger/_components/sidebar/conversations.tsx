@@ -21,21 +21,25 @@ const Conversations: FC<Props> = ({ conversations }) => {
         className={"w-full h-[40px]"}
       />
       <div className="w-full flex flex-col gap-4 h-full overflow-hidden overflow-y-auto">
-        {conversations
-          .filter((conversation) =>
-            conversation.users.some(
-              (user) =>
-                user.name?.includes(search) || user.email?.includes(search),
-            ),
-          )
-          .map((conversation) => {
-            return (
-              <SidebarConversationCard
-                conversation={conversation as any}
-                key={conversation.id}
-              />
-            );
-          })}
+        {!!conversations.length ? (
+          conversations
+            .filter((conversation) =>
+              conversation.users.some(
+                (user) =>
+                  user.name?.includes(search) || user.email?.includes(search),
+              ),
+            )
+            .map((conversation) => {
+              return (
+                <SidebarConversationCard
+                  conversation={conversation as any}
+                  key={conversation.id}
+                />
+              );
+            })
+        ) : (
+          <h2 className="text-destructive text-sm">Пока пусто!</h2>
+        )}
       </div>
     </div>
   );
