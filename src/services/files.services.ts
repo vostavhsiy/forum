@@ -120,6 +120,7 @@ export const download = async (url: string) => {
   try {
     const res = await fetch(url, { mode: "no-cors" });
     const file = await res.blob();
+    console.log(file);
     const binaryData = await file.arrayBuffer();
     const blob = new Blob([binaryData], {
       type: file.type,
