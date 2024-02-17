@@ -12,6 +12,7 @@ import { ends } from "@/lib/word-ends";
 import { addPostView } from "@/actions/blog.actions";
 import { LoaderLink } from "@/components/LoaderLink";
 import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
+import { DeleteButton } from "@/app/(browse)/(main)/post/[id]/_components/DeleteButton";
 
 interface Props {
   params: {
@@ -38,6 +39,9 @@ const PostPage: NextPage<Props> = async ({ params }) => {
       >
         {user && ["admin", "editor"].includes(user.role) && (
           <EditPostForm post={post} />
+        )}
+        {user && ["admin", "editor"].includes(user.role) && (
+          <DeleteButton post={post} user={user} />
         )}
         {user && <CreateReportForm post={post} />}
         <div className={"flex items-center gap-2"}>
