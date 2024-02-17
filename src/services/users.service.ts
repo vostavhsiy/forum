@@ -2,7 +2,12 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/actions/auth.actions";
 import { IUser } from "@/types/IUser";
 
-export const getUsers = async (page = 0, search?: string, size = 8) => {
+export const getUsers = async (
+  page = 0,
+  search?: string,
+  size = 8,
+  filter?: string,
+) => {
   try {
     const users = await prisma.user.findMany({
       where: {
@@ -21,9 +26,18 @@ export const getUsers = async (page = 0, search?: string, size = 8) => {
       },
       skip: page * size,
       take: size,
-      orderBy: {
-        name: "asc",
-      },
+      orderBy:
+        filter === "name"
+          ? { name: "asc" }
+          : filter === "old"
+            ? { createdAt: "asc" }
+            : filter === "new"
+              ? { createdAt: "desc" }
+              : {
+                  subscribers: {
+                    _count: "desc",
+                  },
+                },
       include: {
         subscribers: true,
       },
