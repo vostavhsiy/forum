@@ -117,7 +117,7 @@ export const downloadMessageFile = async (url: string) => {
 };
 
 export const download = async (url: string) => {
-  await fetch(url)
+  await fetch(url, { mode: "no-cors" })
     .then((response) => response.blob())
     .then((blob) => {
       const link = document.createElement("a");
