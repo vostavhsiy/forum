@@ -5,10 +5,12 @@ import { authConfig } from "@/lib/configs/AuthConfig";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import {
+  uploadMessageFile,
   uploadMessageImage,
   uploadUserAvatar,
 } from "@/services/files.services";
 import { Conversation } from "@prisma/client";
+import { isFileImage } from "@/lib/is-file";
 
 export const getConversations = async () => {
   const session = await getServerSession(authConfig);
@@ -167,7 +169,13 @@ export const sendMessage = async (
     };
   }
 
-  const messageImage = await uploadMessageImage(data.image);
+  const isImage = isFileImage(data.image);
+  const messageFile = isImage
+    ? await uploadMessageImage(data.image)
+    : await uploadMessageFile(data.image);
+
+  //@ts-ignore
+  const messageFileUrl = messageFile ? messageFile.Location : "";
 
   try {
     const newMessage = await prisma.message.create({
@@ -177,8 +185,8 @@ export const sendMessage = async (
       },
       data: {
         body: data.text,
-        //@ts-ignore
-        image: messageImage ? messageImage.Location : "",
+        image: isImage ? messageFileUrl : "",
+        file: !isImage ? messageFileUrl : "",
         conversation: {
           connect: { id: conversationId },
         },

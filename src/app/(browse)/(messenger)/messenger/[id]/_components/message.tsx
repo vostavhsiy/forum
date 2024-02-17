@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { Message } from "@prisma/client";
 import { CheckCheck } from "lucide-react";
+import { download } from "@/services/files.services";
 
 interface MessageBoxProps {
   data: Message & {
@@ -98,7 +99,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
     <div className={container}>
       <div className={body}>
         <div className={message}>
-          {data?.image && (
+          {data.image && (
             <Image
               src={data.image}
               alt="Image"
@@ -107,6 +108,17 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
               height={1000}
               className="min-w-72 lg:max-w-[500px] cursor-pointer object-cover hover:scale-105 transition ease-in-out rounded-md"
             />
+          )}
+          {data.file && (
+            <div
+              onClick={async () => {
+                if (data.file) {
+                  const file = await download(data.file);
+                }
+              }}
+            >
+              <span>{data.file.split("---").slice(-1)}</span>
+            </div>
           )}
           <div>{data.body}</div>
         </div>
