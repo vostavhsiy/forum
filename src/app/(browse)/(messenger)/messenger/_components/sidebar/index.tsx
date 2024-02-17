@@ -11,6 +11,7 @@ import { auth } from "@/actions/auth.actions";
 import { SidebarUserCard } from "@/app/(browse)/(messenger)/messenger/_components/SidebarUserCard";
 import { SidebarConversationCard } from "@/app/(browse)/(messenger)/messenger/_components/SidebarConversationCard";
 import { getRecommendedUsersForChat } from "@/services/users.service";
+import { Conversations } from "@/app/(browse)/(messenger)/messenger/_components/sidebar/conversations";
 
 const Sidebar = async () => {
   const conversations = await getConversations();
@@ -28,16 +29,7 @@ const Sidebar = async () => {
           return <SidebarUserCard user={u} key={u.id} />;
         })}
       </div>
-      <div className="w-full flex flex-col gap-4 h-full overflow-hidden overflow-y-auto">
-        {conversations.map((conversation) => {
-          return (
-            <SidebarConversationCard
-              conversation={conversation}
-              key={conversation.id}
-            />
-          );
-        })}
-      </div>
+      <Conversations conversations={conversations} />
     </div>
   );
 };
