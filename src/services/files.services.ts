@@ -117,18 +117,30 @@ export const downloadMessageFile = async (url: string) => {
 };
 
 export const download = async (url: string) => {
-  const file = await s3.Download(url);
-  if (!file) return;
-  const raw = atob(String(file.data.Body));
-  const binaryData = new Uint8Array(new ArrayBuffer(raw.length));
-  for (let i = 0; i < raw.length; i++) {
-    binaryData[i] = raw.charCodeAt(i);
-  }
-  const blob = new Blob([binaryData], {
-    type: file.data.ContentType,
-  });
-  let link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = url.split("---").slice(-1)[0];
-  link.click();
+  await fetch(url)
+    .then((response) => response.blob())
+    .then((blob) => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = url.split("---").slice(-1)[0];
+      link.click();
+    })
+    .catch(console.error);
 };
+
+// export const download = async (url: string) => {
+//   const file = await s3.Download(url);
+//   if (!file) return;
+//   const raw = atob(String(file.data.Body));
+//   const binaryData = new Uint8Array(new ArrayBuffer(raw.length));
+//   for (let i = 0; i < raw.length; i++) {
+//     binaryData[i] = raw.charCodeAt(i);
+//   }
+//   const blob = new Blob([binaryData], {
+//     type: file.data.ContentType,
+//   });
+//   let link = document.createElement("a");
+//   link.href = URL.createObjectURL(blob);
+//   link.download = url.split("---").slice(-1)[0];
+//   link.click();
+// };
