@@ -96,7 +96,6 @@ const TagPage: NextPage<Props> = async ({ params, searchParams }) => {
         size={size}
         total={total}
         baseLink={`/tag/${tag.id}`}
-        isQuery
       />
     </div>
   );

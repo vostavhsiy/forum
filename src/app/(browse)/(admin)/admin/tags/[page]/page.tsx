@@ -68,6 +68,7 @@ const AdminTagsPage: NextPage<Props> = async ({ params, searchParams }) => {
             size={size}
             total={total}
             baseLink={"admin/tags"}
+            search={searchParams.search}
           />
         </>
       ) : (

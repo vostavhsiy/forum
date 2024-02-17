@@ -67,6 +67,8 @@ const UsersPage: NextPage<Props> = async ({ params, searchParams }) => {
         size={size}
         total={total}
         baseLink={"/users"}
+        search={searchParams.search}
+        filter={filter}
       />
     </div>
   );

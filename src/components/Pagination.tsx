@@ -8,6 +8,7 @@ interface Props {
   total: number;
   baseLink: string;
   search?: string;
+  filter?: string;
   isQuery?: boolean;
 }
 
@@ -17,6 +18,7 @@ export const Pagination: FC<Props> = ({
   total,
   baseLink,
   search,
+  filter,
   isQuery,
 }) => {
   return (
@@ -32,8 +34,8 @@ export const Pagination: FC<Props> = ({
             <Link
               href={
                 isQuery
-                  ? `${baseLink}?page=${page - 1}&${search ? `search=${search}` : ""}`
-                  : `${baseLink}/${page - 1}?${search ? `search=${search}` : ""}`
+                  ? `${baseLink}?page=${page - 1}&${search ? `search=${search}$` : ""}${filter ? `filter=${filter}` : ""}`
+                  : `${baseLink}/${page - 1}?${search ? `search=${search}&` : ""}`
               }
             >
               Назад
@@ -50,8 +52,8 @@ export const Pagination: FC<Props> = ({
             <Link
               href={
                 isQuery
-                  ? `${baseLink}?page=${page + 1}&${search ? `search=${search}` : ""}`
-                  : `${baseLink}/${page + 1}?${search ? `search=${search}` : ""}`
+                  ? `${baseLink}?page=${page + 1}&${search ? `search=${search}&` : ""}${filter ? `filter=${filter}` : ""}`
+                  : `${baseLink}/${page + 1}?${search ? `search=${search}&` : ""}`
               }
             >
               Вперед

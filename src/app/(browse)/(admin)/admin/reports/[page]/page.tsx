@@ -26,7 +26,7 @@ const AdminReportsPage: NextPage<Props> = async ({ params, searchParams }) => {
 
   if (!reports.length && page > 0) {
     return redirect(
-      `/admin/users/${page}?${searchParams.search ? `search=${searchParams.search}` : ""}`,
+      `/admin/reports/${page}?${searchParams.search ? `search=${searchParams.search}` : ""}`,
     );
   }
 
@@ -45,6 +45,7 @@ const AdminReportsPage: NextPage<Props> = async ({ params, searchParams }) => {
             size={size}
             total={total}
             baseLink={"admin/users"}
+            search={searchParams.search}
           />
         </>
       ) : (
