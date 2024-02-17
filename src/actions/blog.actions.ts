@@ -168,6 +168,7 @@ export const editPostInPanel = async (id: string, payload: FormData) => {
     revalidatePath("/profile/posts", "page");
     revalidatePath("/profile/favourites", "page");
     revalidatePath("/blog", "page");
+    revalidatePath("/post/[id]", "page");
     revalidatePath("/admin/posts/[page]", "page");
     revalidatePath("/admin/reports/[page]", "page");
     return {

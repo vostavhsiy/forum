@@ -11,6 +11,7 @@ import { getPostForPostPage } from "@/services/posts.service";
 import { ends } from "@/lib/word-ends";
 import { addPostView } from "@/actions/blog.actions";
 import { LoaderLink } from "@/components/LoaderLink";
+import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
 
 interface Props {
   params: {
@@ -35,6 +36,9 @@ const PostPage: NextPage<Props> = async ({ params }) => {
           "absolute top-[10px] right-[10px] flex items-center gap-8 text-[10px] lg:text-sm font-semibold"
         }
       >
+        {user && ["admin", "editor"].includes(user.role) && (
+          <EditPostForm post={post} />
+        )}
         {user && <CreateReportForm post={post} />}
         <div className={"flex items-center gap-2"}>
           <span>
