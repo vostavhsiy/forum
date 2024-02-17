@@ -19,7 +19,7 @@ const LoginPage = () => {
         <LoginForm />
       </div>
       <div className="mt-6">
-        Нет даже аккаунта Google?{" "}
+        Нет даже аккаунта GitHub?{" "}
         <LoaderLink href={"/signup"} className={"text-destructive"}>
           Зарегистрируйтесь
         </LoaderLink>
