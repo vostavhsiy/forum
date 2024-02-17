@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC, useTransition } from "react";
 import { deletePost } from "@/actions/blog.actions";
 import { toast } from "sonner";
