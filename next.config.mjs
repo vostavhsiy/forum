@@ -8,7 +8,14 @@ const nextConfig = {
     experimental: {
         missingSuspenseWithCSRBailout: false
     },
-    pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js']
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            config.node = {
+                fs: 'empty'
+            }
+        }
+        return config
+    }
 };
 
 export default nextConfig;
