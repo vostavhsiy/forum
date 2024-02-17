@@ -13,12 +13,12 @@ const Conversations: FC<Props> = ({ conversations }) => {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="h-full flex flex-col gap-2">
+    <div className="h-full w-full overflow-hidden flex flex-col gap-8">
       <Input
         value={search}
         onChange={(event) => setSearch(event.currentTarget.value)}
         placeholder="Поиск по имени"
-        className={"w-full h-[20px]"}
+        className={"w-full h-[40px]"}
       />
       <div className="w-full flex flex-col gap-4 h-full overflow-hidden overflow-y-auto">
         {conversations

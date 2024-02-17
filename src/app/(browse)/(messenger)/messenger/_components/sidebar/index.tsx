@@ -22,7 +22,7 @@ const Sidebar = async () => {
       style={{
         height: "calc(100vh - 60px)",
       }}
-      className="w-full border-r-2 flex flex-col py-2 px-4 items-start gap-10 pt-5 overflow-auto"
+      className="w-full border-r-2 flex flex-col py-2 px-4 items-start gap-5 pt-5 overflow-auto"
     >
       <div className="w-full h-[80px] overflow-x-auto overflow-y-hidden flex items-center gap-5 p-2 rounded-xl bg-secondary">
         {users?.map((u) => {
