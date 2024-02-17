@@ -71,7 +71,7 @@ const TagPage: NextPage<Props> = async ({ params, searchParams }) => {
   });
 
   return (
-    <div className="flex flex-col gap-4 p-5 mb-[100px]">
+    <div className="flex flex-col gap-4 p-5">
       <h1 className="text-lg font-semibold">
         Посты с тегом <span className="font-bold">{tag.name}</span>
       </h1>
@@ -96,6 +96,7 @@ const TagPage: NextPage<Props> = async ({ params, searchParams }) => {
         size={size}
         total={total}
         baseLink={`/tag/${tag.id}`}
+        isQuery
       />
     </div>
   );

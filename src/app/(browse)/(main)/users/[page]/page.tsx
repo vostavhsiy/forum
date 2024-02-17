@@ -22,7 +22,7 @@ interface Props {
 const UsersPage: NextPage<Props> = async ({ params, searchParams }) => {
   const authUser = await auth();
   const page = params.page ? +params.page - 1 : 0;
-  const size = +(searchParams.size || 8);
+  const size = +(searchParams.size || 1);
   const filter = searchParams.filter;
 
   const { users, total } = await getUsers(
