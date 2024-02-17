@@ -28,7 +28,7 @@ export const getUsers = async (
       take: size,
       orderBy:
         filter === "name"
-          ? { name: "asc" }
+          ? { name: "desc" }
           : filter === "old"
             ? { createdAt: "asc" }
             : filter === "new"
