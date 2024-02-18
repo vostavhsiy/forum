@@ -135,8 +135,9 @@ export const downloadMessageFile = async (url: string) => {
 // };
 
 export const download = async (url: string) => {
-  const file = await s3.Download(url);
-  console.log(file);
+  const file = await s3.Download(
+    url.split("https://ivtipt-forum.storage.yandexcloud.net").slice(-1)[0],
+  );
   if (!file) return;
   const raw = atob(String(file.data.Body));
   const binaryData = new Uint8Array(new ArrayBuffer(raw.length));
