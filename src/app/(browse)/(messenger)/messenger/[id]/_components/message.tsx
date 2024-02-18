@@ -6,9 +6,10 @@ import clsx from "clsx";
 import { format } from "date-fns";
 import Image from "next/image";
 import { Message } from "@prisma/client";
-import { CheckCheck } from "lucide-react";
+import { CheckCheck, File } from "lucide-react";
 import { download } from "@/services/files.services";
 import { downloadMessageFile } from "@/actions/chat.actions";
+import { cn } from "@/lib/utils";
 
 interface MessageBoxProps {
   data: Message & {
@@ -114,12 +115,14 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
           )}
           {data.file && (
             <div
-              className="flex items-center gap-4"
+              className={cn(
+                "flex items-center gap-4",
+                isPending && "opacity-60 cursor-not-allowed",
+              )}
               onClick={async () => {
                 if (data.file) {
                   startTransition(() => {
                     downloadMessageFile(data.file as string).then((file) => {
-                      console.log(file);
                       if (
                         file &&
                         file.data.Body &&
@@ -141,11 +144,11 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 }
               }}
             >
-              {isPending && <h5>Загрузка...</h5>}
               <span>{data.file.split("---").slice(-1)}</span>
+              <File />
             </div>
           )}
-          ${data.body && <div>{data.body}</div>}
+          {data.body && <div>{data.body}</div>}
         </div>
         <div className={`flex gap-2`}>
           <div className="text-xs text-gray-400">
