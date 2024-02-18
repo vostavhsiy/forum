@@ -116,37 +116,38 @@ export const downloadMessageFile = async (url: string) => {
   return file;
 };
 
-export const download = async (url: string) => {
-  try {
-    const res = await fetch(url, { mode: "no-cors" });
-    console.log(res);
-    const file = await res.blob();
-    const binaryData = await file.arrayBuffer();
-    const blob = new Blob([binaryData], {
-      type: file.type,
-    });
-    let link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = url.split("---").slice(-1)[0];
-    link.click();
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 // export const download = async (url: string) => {
-//   const file = await s3.Download(url);
-//   if (!file) return;
-//   const raw = atob(String(file.data.Body));
-//   const binaryData = new Uint8Array(new ArrayBuffer(raw.length));
-//   for (let i = 0; i < raw.length; i++) {
-//     binaryData[i] = raw.charCodeAt(i);
+//   try {
+//     const res = await fetch(url, { mode: "no-cors" });
+//     console.log(res);
+//     const file = await res.blob();
+//     const binaryData = await file.arrayBuffer();
+//     const blob = new Blob([binaryData], {
+//       type: file.type,
+//     });
+//     let link = document.createElement("a");
+//     link.href = URL.createObjectURL(blob);
+//     link.download = url.split("---").slice(-1)[0];
+//     link.click();
+//   } catch (e) {
+//     console.log(e);
 //   }
-//   const blob = new Blob([binaryData], {
-//     type: file.data.ContentType,
-//   });
-//   let link = document.createElement("a");
-//   link.href = URL.createObjectURL(blob);
-//   link.download = url.split("---").slice(-1)[0];
-//   link.click();
 // };
+
+export const download = async (url: string) => {
+  const file = await s3.Download(url);
+  console.log(file);
+  if (!file) return;
+  const raw = atob(String(file.data.Body));
+  const binaryData = new Uint8Array(new ArrayBuffer(raw.length));
+  for (let i = 0; i < raw.length; i++) {
+    binaryData[i] = raw.charCodeAt(i);
+  }
+  const blob = new Blob([binaryData], {
+    type: file.data.ContentType,
+  });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = url.split("---").slice(-1)[0];
+  link.click();
+};
