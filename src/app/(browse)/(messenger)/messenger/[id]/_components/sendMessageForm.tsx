@@ -10,6 +10,7 @@ import { sendMessage } from "@/actions/chat.actions";
 import { socket } from "@/components/Notifications";
 import useOtherUser from "@/hooks/useOtherUser";
 import { useSession } from "next-auth/react";
+import { transliteName } from "@/services/files.services";
 
 interface Props {
   conversation: Conversation;
@@ -31,6 +32,7 @@ const SendMessageForm: FC<Props> = ({ conversation, onSend }) => {
         data.set("text", values.text);
         if (image.current?.files && image.current.files[0]) {
           data.set("image", image.current.files[0]);
+          console.log(transliteName(image.current.files[0].name));
         }
         startTransition(() => {
           sendMessage(conversation.id, data).then((res) => {
