@@ -116,10 +116,11 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
           {data.file && (
             <div
               className={cn(
-                "flex items-center gap-4",
+                "cursor-pointer flex items-center gap-4",
                 isPending && "opacity-60 cursor-not-allowed",
               )}
               onClick={async () => {
+                if (isPending) return;
                 if (data.file) {
                   startTransition(() => {
                     downloadMessageFile(data.file as string).then((file) => {

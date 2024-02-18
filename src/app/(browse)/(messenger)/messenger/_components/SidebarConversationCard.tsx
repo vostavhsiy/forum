@@ -103,7 +103,7 @@ const SidebarConversationCard: FC<Props> = ({ conversation }) => {
             {lastMessage.sender.id !== otherUser.id && (
               <span className={"font-semibold"}>Вы:</span>
             )}{" "}
-            {lastMessage.body}{" "}
+            {lastMessage.body || (lastMessage.image ? "Фото" : "Файл")}{" "}
             {!!news.length && (
               <span
                 className={
