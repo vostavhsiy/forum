@@ -32,7 +32,7 @@ const SendMessageForm: FC<Props> = ({ conversation, onSend }) => {
         data.set("text", values.text);
         if (image.current?.files && image.current.files[0]) {
           data.set("image", image.current.files[0]);
-          console.log(transliteName(image.current.files[0].name));
+          data.set("fileName", transliteName(image.current.files[0].name));
         }
         startTransition(() => {
           sendMessage(conversation.id, data).then((res) => {

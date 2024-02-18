@@ -97,26 +97,26 @@ export const deletePostImage = async (imageUrl: string) => {
   return deleted;
 };
 
-export const uploadMessageImage = async (file?: File) => {
+export const uploadMessageImage = async (file?: File, fileName?: string) => {
   if (!file) return false;
   const id = uuid();
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + transliteName(file.name),
+      name: id + fileName,
     },
     "/messages-images",
   );
   return image;
 };
 
-export const uploadMessageFile = async (file?: File) => {
+export const uploadMessageFile = async (file?: File, fileName?: string) => {
   if (!file) return false;
   const id = uuid();
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + "---" + transliteName(file.name),
+      name: id + "---" + fileName,
     },
     "/messages-files",
   );

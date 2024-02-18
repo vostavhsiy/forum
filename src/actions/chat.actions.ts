@@ -161,6 +161,9 @@ export const sendMessage = async (
   const data = {
     text: payload.get("text") ? String(payload.get("text")) : null,
     image: (payload.get("image") as File) || null,
+    fileName: payload.get("fileName")
+      ? String(payload.get("fileName"))
+      : undefined,
   };
 
   if (!data.text && !data.image) {
@@ -170,10 +173,12 @@ export const sendMessage = async (
     };
   }
 
+  console.log(data.fileName);
+
   const isImage = isFileImage(data.image);
   const messageFile = isImage
-    ? await uploadMessageImage(data.image)
-    : await uploadMessageFile(data.image);
+    ? await uploadMessageImage(data.image, data.fileName)
+    : await uploadMessageFile(data.image, data.fileName);
 
   //@ts-ignore
   const messageFileUrl = messageFile ? messageFile.Location : "";
