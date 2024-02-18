@@ -130,6 +130,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 }
               }}
             >
+              {isPending && <h5>Загрузка...</h5>}
               <span>{data.file.split("---").slice(-1)}</span>
             </div>
           )}

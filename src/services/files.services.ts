@@ -134,8 +134,7 @@ export const download = async (
   type: string,
   name: string,
 ) => {
-  const binaryData = file;
-  const blob = new Blob([binaryData], {
+  const blob = new Blob([file], {
     type,
   });
   let link = document.createElement("a");
