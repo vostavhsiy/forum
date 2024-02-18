@@ -19,7 +19,11 @@ export const auth = async () => {
       },
       include: {
         favourites: true,
-        notifications: true,
+        notifications: {
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
       },
     });
     if (!user) {
