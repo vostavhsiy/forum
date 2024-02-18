@@ -138,12 +138,8 @@ export const download = async (url: string) => {
   const file = await s3.Download(
     url.split("https://ivtipt-forum.storage.yandexcloud.net").slice(-1)[0],
   );
-  if (!file) return;
-  const raw = atob(String(file.data.Body));
-  const binaryData = new Uint8Array(new ArrayBuffer(raw.length));
-  for (let i = 0; i < raw.length; i++) {
-    binaryData[i] = raw.charCodeAt(i);
-  }
+  if (!file || !file.data.Body) return;
+  const binaryData = file.data.Body as Uint8Array;
   const blob = new Blob([binaryData], {
     type: file.data.ContentType,
   });
