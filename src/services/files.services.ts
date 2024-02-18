@@ -4,11 +4,12 @@ import { v4 as uuid } from "uuid";
 // Инициализация
 const s3 = new EasyYandexS3({
   auth: {
-    accessKeyId: process.env.STORAGE_ACCESS_KEY || "",
-    secretAccessKey: process.env.STORAGE_SECRET_KEY || "",
+    accessKeyId: process.env.NEXT_PUBLIC_STORAGE_ACCESS_KEY || "",
+    secretAccessKey: process.env.NEXT_PUBLIC_STORAGE_SECRET_KEY || "",
   },
   Bucket: "ivtipt-forum",
   debug: true,
+  region: "russia",
 });
 
 export const uploadUserAvatar = async (file?: File) => {
