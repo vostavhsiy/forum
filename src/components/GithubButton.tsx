@@ -4,6 +4,7 @@ import React, { useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
+import { Github } from "lucide-react";
 
 export const GithubButton = (props: ButtonProps) => {
   const searchParams = useSearchParams();
@@ -23,8 +24,10 @@ export const GithubButton = (props: ButtonProps) => {
         });
       }}
       {...props}
+      className={"flex items-center gap-6 " + props.className}
     >
-      Войти с помощью Github
+      <span>Войти с помощью GitHub</span>
+      <Github />
     </Button>
   );
 };

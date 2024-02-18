@@ -22,7 +22,7 @@ export const LoginForm = () => {
     { setFieldError }: FormikHelpers<{ email: string; password: string }>,
   ) => {
     if (!values.email || !values.password) {
-      return setFieldError("email", "Заполните все поля");
+      return toast.error("Заполните все поля!");
     }
     startTransition(() => {
       signIn("credentials", {
