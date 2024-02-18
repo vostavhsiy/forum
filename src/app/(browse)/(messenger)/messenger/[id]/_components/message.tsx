@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { useSession } from "next-auth/react";
 import clsx from "clsx";
 import { format } from "date-fns";
@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Message } from "@prisma/client";
 import { CheckCheck } from "lucide-react";
 import { download } from "@/services/files.services";
+import { downloadMessageFile } from "@/actions/chat.actions";
 
 interface MessageBoxProps {
   data: Message & {
@@ -39,6 +40,8 @@ interface MessageBoxProps {
 
 const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   const [imageModalOpen, setImageModalOpen] = useState(false);
+
+  const [isPending, startTransition] = useTransition();
 
   const session = useSession();
 
@@ -113,7 +116,17 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
             <div
               onClick={async () => {
                 if (data.file) {
-                  const file = await download(data.file);
+                  startTransition(() => {
+                    downloadMessageFile(data.file as string).then((file) => {
+                      if (file && file.data.ContentType && data.file) {
+                        download(
+                          file.data.Body as Uint8Array,
+                          file.data.ContentType,
+                          data.file.split("---").slice(-1)[0],
+                        );
+                      }
+                    });
+                  });
                 }
               }}
             >

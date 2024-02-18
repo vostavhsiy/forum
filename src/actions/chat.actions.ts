@@ -5,6 +5,7 @@ import { authConfig } from "@/lib/configs/AuthConfig";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import {
+  s3,
   uploadMessageFile,
   uploadMessageImage,
   uploadUserAvatar,
@@ -393,4 +394,11 @@ export const receiveNewMessage = async () => {
 export const receiveNewNotification = async () => {
   revalidatePath("/messenger", "page");
   revalidatePath("/messenger/[id]", "page");
+};
+
+export const downloadMessageFile = async (url: string) => {
+  const file = await s3.Download(
+    url.split("https://ivtipt-forum.storage.yandexcloud.net").slice(-1)[0],
+  );
+  return file;
 };

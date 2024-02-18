@@ -2,10 +2,10 @@ import { default as EasyYandexS3 } from "easy-yandex-s3";
 import { v4 as uuid } from "uuid";
 
 // Инициализация
-const s3 = new EasyYandexS3({
+export const s3 = new EasyYandexS3({
   auth: {
-    accessKeyId: process.env.NEXT_PUBLIC_STORAGE_ACCESS_KEY || "",
-    secretAccessKey: process.env.NEXT_PUBLIC_STORAGE_SECRET_KEY || "",
+    accessKeyId: process.env.STORAGE_ACCESS_KEY || "",
+    secretAccessKey: process.env.STORAGE_SECRET_KEY || "",
   },
   Bucket: "ivtipt-forum",
   debug: true,
@@ -111,11 +111,6 @@ export const uploadMessageFile = async (file?: File) => {
   return image;
 };
 
-export const downloadMessageFile = async (url: string) => {
-  const file = await s3.Download(url);
-  return file;
-};
-
 // export const download = async (url: string) => {
 //   try {
 //     const res = await fetch(url, { mode: "no-cors" });
@@ -134,17 +129,17 @@ export const downloadMessageFile = async (url: string) => {
 //   }
 // };
 
-export const download = async (url: string) => {
-  const file = await s3.Download(
-    url.split("https://ivtipt-forum.storage.yandexcloud.net").slice(-1)[0],
-  );
-  if (!file || !file.data.Body) return;
-  const binaryData = file.data.Body as Uint8Array;
+export const download = async (
+  file: Uint8Array,
+  type: string,
+  name: string,
+) => {
+  const binaryData = file;
   const blob = new Blob([binaryData], {
-    type: file.data.ContentType,
+    type,
   });
   let link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = url.split("---").slice(-1)[0];
+  link.download = name;
   link.click();
 };
