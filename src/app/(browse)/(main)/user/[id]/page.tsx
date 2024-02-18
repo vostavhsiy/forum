@@ -77,7 +77,7 @@ const UserPage: NextPage<Props> = async ({ params }) => {
         <Separator className="my-4" />
         <span>
           {user.subscribes.length}{" "}
-          {ends(user.subscribers.length, ["подписка", "подписки", "подписок"])}
+          {ends(user.subscribes.length, ["подписка", "подписки", "подписок"])}
         </span>
       </div>
       <div className="flex flex-col gap-4 p-5">
