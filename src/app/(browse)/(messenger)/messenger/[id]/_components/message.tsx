@@ -118,6 +118,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 if (data.file) {
                   startTransition(() => {
                     downloadMessageFile(data.file as string).then((file) => {
+                      console.log(file);
                       if (file && file.data.ContentType && data.file) {
                         download(
                           file.data.Body as Uint8Array,
