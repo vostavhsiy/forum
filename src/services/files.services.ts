@@ -5,6 +5,14 @@ import CyrillicToTranslit from "cyrillic-to-translit-js";
 //@ts-ignore
 const cyrillicToTranslit = new CyrillicToTranslit();
 
+export const transliteName = (fileName: string) => {
+  return (
+    cyrillicToTranslit.transform(fileName.split(".")[0], "_") +
+    "." +
+    fileName.split(".").slice(-1)[0]
+  );
+};
+
 // Инициализация
 export const s3 = new EasyYandexS3({
   auth: {
@@ -21,7 +29,7 @@ export const uploadUserAvatar = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + cyrillicToTranslit.transform(file.name, "_"),
+      name: id + transliteName(file.name),
     },
     "/users-avatars",
   );
@@ -41,7 +49,7 @@ export const changeUserAvatar = async (file?: File, oldImageUrl?: string) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + cyrillicToTranslit.transform(file.name, "_"),
+      name: id + transliteName(file.name),
     },
     "/users-avatars",
   );
@@ -54,7 +62,7 @@ export const uploadPostImage = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + cyrillicToTranslit.transform(file.name, "_"),
+      name: id + transliteName(file.name),
     },
     "/posts-images",
   );
@@ -74,7 +82,7 @@ export const changePostImage = async (file?: File, oldImageUrl?: string) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + cyrillicToTranslit.transform(file.name, "_"),
+      name: id + transliteName(file.name),
     },
     "/posts-images",
   );
@@ -95,7 +103,7 @@ export const uploadMessageImage = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + cyrillicToTranslit.transform(file.name, "_"),
+      name: id + transliteName(file.name),
     },
     "/messages-images",
   );
@@ -108,7 +116,7 @@ export const uploadMessageFile = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + "---" + cyrillicToTranslit.transform(file.name, "_"),
+      name: id + "---" + transliteName(file.name),
     },
     "/messages-files",
   );
