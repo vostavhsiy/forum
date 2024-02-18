@@ -9,7 +9,6 @@ const s3 = new EasyYandexS3({
   },
   Bucket: "ivtipt-forum",
   debug: true,
-  region: "russia",
 });
 
 export const uploadUserAvatar = async (file?: File) => {
