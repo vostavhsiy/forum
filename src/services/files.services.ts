@@ -1,5 +1,9 @@
 import { default as EasyYandexS3 } from "easy-yandex-s3";
 import { v4 as uuid } from "uuid";
+import CyrillicToTranslit from "cyrillic-to-translit-js";
+
+//@ts-ignore
+const cyrillicToTranslit = new CyrillicToTranslit();
 
 // Инициализация
 export const s3 = new EasyYandexS3({
@@ -17,7 +21,7 @@ export const uploadUserAvatar = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + file.name,
+      name: id + cyrillicToTranslit.transform(file.name, "_"),
     },
     "/users-avatars",
   );
@@ -37,7 +41,7 @@ export const changeUserAvatar = async (file?: File, oldImageUrl?: string) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + file.name,
+      name: id + cyrillicToTranslit.transform(file.name, "_"),
     },
     "/users-avatars",
   );
@@ -50,7 +54,7 @@ export const uploadPostImage = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + file.name,
+      name: id + cyrillicToTranslit.transform(file.name, "_"),
     },
     "/posts-images",
   );
@@ -70,7 +74,7 @@ export const changePostImage = async (file?: File, oldImageUrl?: string) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + file.name,
+      name: id + cyrillicToTranslit.transform(file.name, "_"),
     },
     "/posts-images",
   );
@@ -91,7 +95,7 @@ export const uploadMessageImage = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + file.name,
+      name: id + cyrillicToTranslit.transform(file.name, "_"),
     },
     "/messages-images",
   );
@@ -104,7 +108,7 @@ export const uploadMessageFile = async (file?: File) => {
   const image = await s3.Upload(
     {
       buffer: Buffer.from(await file.arrayBuffer()),
-      name: id + "---" + file.name,
+      name: id + "---" + cyrillicToTranslit.transform(file.name, "_"),
     },
     "/messages-files",
   );
