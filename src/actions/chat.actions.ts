@@ -185,7 +185,7 @@ export const sendMessage = async (
         sender: true,
       },
       data: {
-        body: data.text,
+        body: data.text || "",
         image: isImage ? messageFileUrl : "",
         file: !isImage ? messageFileUrl : "",
         conversation: {

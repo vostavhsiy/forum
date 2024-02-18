@@ -25,7 +25,8 @@ const SendMessageForm: FC<Props> = ({ conversation, onSend }) => {
     <Formik
       initialValues={{ text: "", image: "" }}
       onSubmit={async (values, { resetForm }) => {
-        if (!values.text) return;
+        if (!values.text && image.current?.files && !image.current.files[0])
+          return;
         const data = new FormData();
         data.set("text", values.text);
         if (image.current?.files && image.current.files[0]) {

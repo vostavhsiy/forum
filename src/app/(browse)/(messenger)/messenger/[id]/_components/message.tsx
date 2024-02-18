@@ -114,6 +114,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
           )}
           {data.file && (
             <div
+              className="flex items-center gap-4"
               onClick={async () => {
                 if (data.file) {
                   startTransition(() => {
@@ -144,7 +145,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
               <span>{data.file.split("---").slice(-1)}</span>
             </div>
           )}
-          <div>{data.body}</div>
+          ${data.body && <div>{data.body}</div>}
         </div>
         <div className={`flex gap-2`}>
           <div className="text-xs text-gray-400">
