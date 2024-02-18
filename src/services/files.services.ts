@@ -134,6 +134,7 @@ export const download = async (
   type: string,
   name: string,
 ) => {
+  const binaryData = new Uint8Array(file);
   const blob = new Blob([file], {
     type,
   });
