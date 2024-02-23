@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -21,6 +21,8 @@ interface Props {
 }
 
 const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
+  const [open, setOpen] = useState(false);
+
   const notExpiredNots = useMemo(() => {
     return nots?.filter((not) =>
       not.expires ? not.expires.getTime() > Date.now() : false,
@@ -34,10 +36,12 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
   return (
     <div>
       <Popover
+        open={open}
         onOpenChange={async (open) => {
           if (open && nots?.length) {
             await seeUserNotifications({ userId: authUser.id });
           }
+          setOpen(open);
         }}
       >
         <PopoverTrigger asChild>
@@ -61,6 +65,9 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
                 if (not.link) {
                   return (
                     <Link
+                      onClick={() => {
+                        setOpen(false);
+                      }}
                       href={not.link}
                       className="cursor-pointer hover:underline"
                     >
@@ -68,7 +75,16 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
                     </Link>
                   );
                 }
-                return <div key={not.id}>{not.text}</div>;
+                return (
+                  <div
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                    key={not.id}
+                  >
+                    {not.text}
+                  </div>
+                );
               })}
             </div>
           ) : (
