@@ -67,6 +67,7 @@ export const follow = async (id: string) => {
         text: `${session.user.name} подписался на вас.`,
         title: `${session.user.name} подписался на вас.`,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+        link: `/user/${session.user.id}`,
       },
     });
     revalidatePath("/", "page");
@@ -138,6 +139,7 @@ export const unfollow = async (id: string) => {
         text: `${session.user.name} отписался от вас.`,
         title: `${session.user.name} отписался от вас.`,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+        link: `/user/${session.user.id}`,
       },
     });
     revalidatePath("/", "page");
