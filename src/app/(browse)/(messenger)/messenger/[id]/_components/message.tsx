@@ -89,15 +89,15 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 if (isPending) return;
                 if (data.file) {
                   startTransition(() => {
-                    downloadMessageFile(data.file as string)
-                      .then((file) => {
+                    downloadMessageFile(data.file as string).then((file) => {
+                      startTransition(() => {
                         if (
                           file &&
                           file.data.Body &&
                           file.data.ContentType &&
                           data.file
                         ) {
-                          return download(
+                          download(
                             //@ts-ignore
                             file.data.Body.data
                               ? //@ts-ignore
@@ -105,12 +105,12 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                               : (file.data.Body as Uint8Array),
                             file.data.ContentType,
                             data.file.split("---").slice(-1)[0],
-                          );
+                          ).then((res) => {
+                            toast.success("Файл скачан!");
+                          });
                         }
-                      })
-                      .then((res) => {
-                        toast.success("Файл скачан!");
                       });
+                    });
                   });
                 }
               }}
