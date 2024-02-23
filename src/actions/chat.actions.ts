@@ -173,8 +173,6 @@ export const sendMessage = async (
     };
   }
 
-  console.log(data.fileName);
-
   const isImage = isFileImage(data.image);
   const messageFile = isImage
     ? await uploadMessageImage(data.image, data.fileName)

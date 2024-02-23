@@ -10,6 +10,7 @@ import { CheckCheck, File } from "lucide-react";
 import { download } from "@/services/files.services";
 import { downloadMessageFile } from "@/actions/chat.actions";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface MessageBoxProps {
   data: Message & {
@@ -88,24 +89,28 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 if (isPending) return;
                 if (data.file) {
                   startTransition(() => {
-                    downloadMessageFile(data.file as string).then((file) => {
-                      if (
-                        file &&
-                        file.data.Body &&
-                        file.data.ContentType &&
-                        data.file
-                      ) {
-                        download(
-                          //@ts-ignore
-                          file.data.Body.data
-                            ? //@ts-ignore
-                              file.data.Body.data
-                            : (file.data.Body as Uint8Array),
-                          file.data.ContentType,
-                          data.file.split("---").slice(-1)[0],
-                        );
-                      }
-                    });
+                    downloadMessageFile(data.file as string)
+                      .then((file) => {
+                        if (
+                          file &&
+                          file.data.Body &&
+                          file.data.ContentType &&
+                          data.file
+                        ) {
+                          return download(
+                            //@ts-ignore
+                            file.data.Body.data
+                              ? //@ts-ignore
+                                file.data.Body.data
+                              : (file.data.Body as Uint8Array),
+                            file.data.ContentType,
+                            data.file.split("---").slice(-1)[0],
+                          );
+                        }
+                      })
+                      .then((res) => {
+                        toast.success("Файл скачан!");
+                      });
                   });
                 }
               }}
