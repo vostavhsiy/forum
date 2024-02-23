@@ -78,17 +78,15 @@ export const createPost = async (payload: FormData) => {
         error: "Ошибка",
       };
     }
-    const id = uuid();
     for (let i = 0; i < user.subscribers.length; i++) {
       const notification = await prisma.notification.create({
         data: {
-          id,
           userId: user.subscribers[i].subscriberId,
           type: "post",
           text: `Новый пост от ${session.user.name}.`,
           title: "Новый пост",
           expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
-          link: `/post/${id}`,
+          link: `/post/${post.id}`,
         },
       });
     }
