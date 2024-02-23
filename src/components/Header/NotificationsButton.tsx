@@ -41,9 +41,7 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
           if (open && nots?.length) {
             await seeUserNotifications({ userId: authUser.id });
           }
-          if (!open) {
-            setOpen(false);
-          }
+          if (!open) setOpen(false);
         }}
       >
         <PopoverTrigger
