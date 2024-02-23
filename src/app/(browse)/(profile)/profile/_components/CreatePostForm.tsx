@@ -58,6 +58,7 @@ const CreatePostForm: FC<Props> = ({ tags }) => {
               type: "specific",
               data: `Новый пост от ${res.name}!`,
               ids: res.ids,
+              link: res.postId ? `/post/${res.postId}` : "",
             });
             toast.success("Пост создан!");
           } else {

@@ -10,6 +10,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { setNewMessage } from "@/store/messenger/reducer";
+import Link from "next/link";
 
 export const socket = io(String(process.env.NEXT_PUBLIC_SOCKET_URL));
 
@@ -28,7 +29,6 @@ const Notifications: FC<{ id: string }> = ({ id }) => {
     (message: any) => {
       if (message.messenger) {
         receiveNewMessage().then((res) => {
-          console.log(pathname);
           if (pathname.includes(`/messenger/${message.room}`)) {
             dispatch(setNewMessage(1));
           } else {
@@ -37,7 +37,14 @@ const Notifications: FC<{ id: string }> = ({ id }) => {
         });
       } else {
         receiveNewNotification().then((res) => {
-          toast.info(message.data, { id: message.data });
+          toast.info(
+            message.link ? (
+              <Link href={message.link}>{message.data}</Link>
+            ) : (
+              message.data
+            ),
+            { id: message.data },
+          );
         });
       }
     },

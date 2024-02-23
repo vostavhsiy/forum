@@ -122,6 +122,7 @@ model Notification {
   createdAt      DateTime      @default(now()) @db.Timestamptz(3)
   title          String
   text           String
+  link           String?
   userId         String
   user           User          @relation(references: [id], fields: [userId])
   type           String        @default("follow")

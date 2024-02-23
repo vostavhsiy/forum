@@ -13,6 +13,7 @@ import {
   deleteUserNotifications,
   seeUserNotifications,
 } from "@/actions/users.actions";
+import Link from "next/link";
 
 interface Props {
   nots?: Notification[];
@@ -57,6 +58,16 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
           {!!notExpiredNots?.length ? (
             <div className={"flex flex-col gap-3"}>
               {notExpiredNots?.map((not) => {
+                if (not.link) {
+                  return (
+                    <Link
+                      href={not.link}
+                      className="cursor-pointer hover:underline"
+                    >
+                      {not.text}
+                    </Link>
+                  );
+                }
                 return <div key={not.id}>{not.text}</div>;
               })}
             </div>

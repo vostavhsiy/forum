@@ -7,7 +7,6 @@ import { revalidatePath } from "next/cache";
 
 import { redirect } from "next/navigation";
 import { auth } from "@/actions/auth.actions";
-import { sendMessage } from "next/dist/client/dev/error-overlay/websocket";
 import {
   changePostImage,
   deletePostImage,
@@ -15,6 +14,7 @@ import {
 } from "@/services/files.services";
 import { deleteReport } from "@/actions/users.actions";
 import { Tag } from "@prisma/client";
+import { v4 as uuid } from "uuid";
 
 export const createPost = async (payload: FormData) => {
   const session = await getServerSession(authConfig);
@@ -78,14 +78,17 @@ export const createPost = async (payload: FormData) => {
         error: "Ошибка",
       };
     }
+    const id = uuid();
     for (let i = 0; i < user.subscribers.length; i++) {
       const notification = await prisma.notification.create({
         data: {
+          id,
           userId: user.subscribers[i].subscriberId,
           type: "post",
           text: `Новый пост от ${session.user.name}.`,
           title: "Новый пост",
           expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+          link: `/post/${id}`,
         },
       });
     }
@@ -110,6 +113,7 @@ export const createPost = async (payload: FormData) => {
     return {
       ok: true,
       name: user.name,
+      postId: post.id,
       ids: user.subscribers.map(({ subscriber }) => subscriber.id),
       error: null,
     };
