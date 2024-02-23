@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Post } from "./post";
 import { IPost } from "@/types/IPost";
 import { User } from "@prisma/client";
+import { Loader } from "@/components/Loader";
 
 interface Props {
   search?: string;
@@ -80,7 +81,7 @@ const Posts: FC<Props> = ({ search, size, filter, user }) => {
 
   return (
     <div>
-      {fetching && <h2>Загрузка...</h2>}
+      {fetching && <Loader />}
       <div className="flex flex-col gap-6">
         {posts.map((post) => {
           return (
