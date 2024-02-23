@@ -85,7 +85,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 "cursor-pointer flex items-center gap-4",
                 isPending && "opacity-60 cursor-not-allowed",
               )}
-              onClick={async () => {
+              onClick={() => {
                 if (isPending) return;
                 if (data.file) {
                   startTransition(() => {
