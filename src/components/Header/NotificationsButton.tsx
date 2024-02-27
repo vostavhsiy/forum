@@ -79,6 +79,7 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
                       onClick={() => {
                         setOpen(false);
                       }}
+                      key={not.id}
                       href={not.link}
                       className="cursor-pointer hover:underline"
                     >
