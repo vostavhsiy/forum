@@ -66,7 +66,7 @@ export const follow = async (id: string) => {
         type: "follow",
         text: `${session.user.name} подписался на вас.`,
         title: `${session.user.name} подписался на вас.`,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         link: `/user/${session.user.id}`,
       },
     });
@@ -138,7 +138,7 @@ export const unfollow = async (id: string) => {
         type: "follow",
         text: `${session.user.name} отписался от вас.`,
         title: `${session.user.name} отписался от вас.`,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         link: `/user/${session.user.id}`,
       },
     });
@@ -611,6 +611,7 @@ export const seeUserNotifications = async ({ userId }: { userId: string }) => {
       },
       data: {
         seen: true,
+        expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24),
       },
     });
 

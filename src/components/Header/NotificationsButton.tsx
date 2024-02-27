@@ -58,7 +58,13 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
                   "absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 text-sm"
                 }
               >
-                {nots.filter((not) => !not.seen).length}
+                {
+                  nots.filter(
+                    (not) =>
+                      !not.seen ||
+                      (not.expires && not.expires.getTime() < Date.now()),
+                  ).length
+                }
               </span>
             )}
           </Button>
