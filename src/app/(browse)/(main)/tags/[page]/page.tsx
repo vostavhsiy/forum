@@ -8,6 +8,7 @@ import Link from "next/link";
 import { getTags } from "@/services/tags.service";
 import { auth } from "@/actions/auth.actions";
 import { LoaderLink } from "@/components/LoaderLink";
+import notFound from "@/app/not-found";
 
 interface Props {
   params: {
@@ -23,6 +24,10 @@ const TagsPage: NextPage<Props> = async ({ params, searchParams }) => {
   const user = await auth();
   const page = params.page ? +params.page - 1 : 0;
   const size = +(searchParams.size || 30);
+
+  if (isNaN(page)) {
+    return notFound();
+  }
 
   const { tags, total } = await getTags(
     page,
@@ -57,8 +62,8 @@ const TagsPage: NextPage<Props> = async ({ params, searchParams }) => {
       )}
       <Pagination
         page={page + 1}
-        size={size}
-        total={total}
+        size={total ? size : 1}
+        total={total || 1}
         baseLink={"/tags"}
       />
     </div>
