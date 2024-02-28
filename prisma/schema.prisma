@@ -16,6 +16,7 @@ model User {
   name          String?
   email         String?   @unique
   password      String?
+  passwordLink  String?
   emailVerified DateTime?
   image         String?
   createdAt     DateTime  @default(now())

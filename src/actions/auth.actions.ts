@@ -6,6 +6,8 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/configs/AuthConfig";
 import { uploadUserAvatar } from "@/services/files.services";
+import { v4 as uuid } from "uuid";
+import { transporter } from "@/lib/email";
 
 export const auth = async () => {
   const session = await getServerSession(authConfig);
@@ -82,6 +84,99 @@ export const signUp = async (payload: FormData) => {
     return {
       ok: true,
       error: "",
+    };
+  } catch (e) {
+    const err = e as Error;
+    console.log(err.message);
+    return {
+      ok: false,
+      error: err.message,
+    };
+  }
+};
+
+export const createUpdatePasswordLink = async (email: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (!user) {
+      return {
+        ok: false,
+        error: "Пользователь с такой почтой не существует",
+      };
+    }
+    if (user.passwordLink) {
+      return {
+        ok: false,
+        error: "Письмо уже отправлено!",
+      };
+    }
+    const link = uuid();
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        passwordLink: link,
+      },
+    });
+    const mailOptions = {
+      from: "atoian@sfedu.ru",
+      to: email,
+      subject: "Восстановление пароля.",
+      html: `
+        <a style="font-size: 45px; text-align: center" href=${process.env.NEXT_PUBLIC_DOMAIN_URL}/login/update/${updatedUser.passwordLink}">Ссылка восстановления</a>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    return {
+      ok: true,
+    };
+  } catch (e) {
+    const err = e as Error;
+    console.log(err.message);
+    return {
+      ok: false,
+      error: err.message,
+    };
+  }
+};
+
+export const updatePassword = async (link: string, password: string) => {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        passwordLink: link,
+      },
+    });
+    if (!user) {
+      return {
+        ok: false,
+        error: "Ошибка!",
+      };
+    }
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: sha256(password).toString(),
+        passwordLink: null,
+      },
+    });
+
+    return {
+      ok: true,
     };
   } catch (e) {
     const err = e as Error;
