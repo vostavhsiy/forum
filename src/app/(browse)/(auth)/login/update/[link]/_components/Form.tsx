@@ -24,6 +24,9 @@ const Form: FC<Props> = ({ link }) => {
   const submitHandler = (data: FormData) => {
     const password = data.get("password") as string;
     if (isPending || !password || fetching) return;
+    if (password.length < 9) {
+      return toast.error("Пароль должен быть не короче 9 символов!");
+    }
     startTransition(() => {
       updatePassword(link, password).then((res) => {
         if (res.ok) {
