@@ -24,6 +24,9 @@ const EditForm: FC<Props> = ({ name }) => {
       }}
       onSubmit={async (values, { setFieldValue }) => {
         const data = new FormData();
+        if (values.name.length < 5) {
+          return toast.error("Имя должно быть не короче 5 символов!");
+        }
         data.set("name", values.name);
         if (image.current?.files && image.current.files[0]) {
           data.set("image", image.current.files[0]);

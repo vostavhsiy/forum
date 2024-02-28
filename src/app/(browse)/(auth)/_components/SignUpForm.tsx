@@ -30,8 +30,8 @@ export const SignUpForm = () => {
     if (!values.email || !values.name || !values.password) {
       return toast.error("Заполните все поля!");
     }
-    if (values.name.length < 6) {
-      return toast.error("Имя должно быть не короче 6 символов!");
+    if (values.name.length < 5) {
+      return toast.error("Имя должно быть не короче 5 символов!");
     }
     if (values.password.length < 9) {
       return toast.error("Пароль должен быть не короче 9 символов!");

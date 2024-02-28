@@ -192,7 +192,7 @@ export const editProfile = async (payload: FormData) => {
       data: {
         name: data.name,
         //@ts-ignore
-        image: image ? image.Location : "",
+        image: image ? image.Location : authUser.image,
       },
     });
     if (!user) {
