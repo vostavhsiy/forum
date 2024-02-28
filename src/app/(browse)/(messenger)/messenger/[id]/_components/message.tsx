@@ -43,7 +43,7 @@ interface MessageBoxProps {
 const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   const [imageModalOpen, setImageModalOpen] = useState(false);
 
-  const [isPending, startTransition] = useTransition();
+  const [fetching, setFetching] = useState(false);
 
   const session = useSession();
 
@@ -83,34 +83,32 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
             <div
               className={cn(
                 "cursor-pointer flex items-center gap-4",
-                isPending && "opacity-60 cursor-not-allowed",
+                fetching && "opacity-60 cursor-not-allowed",
               )}
               onClick={() => {
-                if (isPending) return;
+                if (fetching) return;
                 if (data.file) {
-                  startTransition(() => {
-                    downloadMessageFile(data.file as string).then((file) => {
-                      startTransition(() => {
-                        if (
-                          file &&
-                          file.data.Body &&
-                          file.data.ContentType &&
-                          data.file
-                        ) {
-                          download(
-                            //@ts-ignore
+                  setFetching(true);
+                  downloadMessageFile(data.file as string).then((file) => {
+                    if (
+                      file &&
+                      file.data.Body &&
+                      file.data.ContentType &&
+                      data.file
+                    ) {
+                      download(
+                        //@ts-ignore
+                        file.data.Body.data
+                          ? //@ts-ignore
                             file.data.Body.data
-                              ? //@ts-ignore
-                                file.data.Body.data
-                              : (file.data.Body as Uint8Array),
-                            file.data.ContentType,
-                            data.file.split("---").slice(-1)[0],
-                          ).then((res) => {
-                            toast.success("Файл скачан!");
-                          });
-                        }
+                          : (file.data.Body as Uint8Array),
+                        file.data.ContentType,
+                        data.file.split("---").slice(-1)[0],
+                      ).then((res) => {
+                        setFetching(false);
+                        toast.success("Файл скачан!");
                       });
-                    });
+                    }
                   });
                 }
               }}
