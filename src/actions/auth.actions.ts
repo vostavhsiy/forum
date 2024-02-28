@@ -128,7 +128,7 @@ export const createUpdatePasswordLink = async (email: string) => {
       to: email,
       subject: "Восстановление пароля.",
       html: `
-        <a style="font-size: 45px; text-align: center" href=${process.env.NEXT_PUBLIC_DOMAIN_URL}/login/update/${updatedUser.passwordLink}">Ссылка восстановления</a>
+        <a style="font-size: 45px; text-align: center" href="${process.env.NEXT_PUBLIC_DOMAIN_URL}/login/update/${updatedUser.passwordLink}">Ссылка восстановления</a>
       `,
     };
 
