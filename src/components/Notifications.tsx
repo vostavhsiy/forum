@@ -1,7 +1,7 @@
 "use client";
 
 import io from "socket.io-client";
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   receiveNewMessage,
@@ -21,10 +21,12 @@ const Notifications: FC<{ id: string }> = ({ id }) => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
 
-  const player = useAppSelector((state) => state.service.player);
+  // const player = useAppSelector((state) => state.service.player);
+
+  const [player, setPlayer] = useState(new Player());
 
   useEffect(() => {
-    dispatch(setPlayer(new Player()));
+    // dispatch(setPlayer(new Player()));
     socket.send({
       type: "connection",
       data: id,
