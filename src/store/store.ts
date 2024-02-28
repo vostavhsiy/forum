@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import messengerReducer from "./messenger/reducer";
+import serviceReducer from "./service/reducer";
 
 const rootReducer = combineReducers({
   chat: messengerReducer,
+  service: serviceReducer,
 });
 
 const store = configureStore({

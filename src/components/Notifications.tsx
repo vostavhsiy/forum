@@ -11,6 +11,9 @@ import { usePathname } from "next/navigation";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { setNewMessage } from "@/store/messenger/reducer";
 import Link from "next/link";
+import { setPlayer } from "@/store/service/reducer";
+import { Player } from "@/lib/audio";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export const socket = io(String(process.env.NEXT_PUBLIC_SOCKET_URL));
 
@@ -18,7 +21,10 @@ const Notifications: FC<{ id: string }> = ({ id }) => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
 
+  const player = useAppSelector((state) => state.service.player);
+
   useEffect(() => {
+    dispatch(setPlayer(new Player()));
     socket.send({
       type: "connection",
       data: id,
@@ -29,7 +35,8 @@ const Notifications: FC<{ id: string }> = ({ id }) => {
     (message: any) => {
       if (message.messenger) {
         receiveNewMessage().then((res) => {
-          if (pathname.includes(`/messenger/${message.room}`)) {
+          //if (pathname.includes(`/messenger/${message.room}`)) {
+          if (pathname.includes(`/messenger`)) {
             dispatch(setNewMessage(1));
           } else {
             toast.info(message.data, { id: message.data });
@@ -47,6 +54,7 @@ const Notifications: FC<{ id: string }> = ({ id }) => {
           );
         });
       }
+      player?.play();
     },
     [pathname],
   );

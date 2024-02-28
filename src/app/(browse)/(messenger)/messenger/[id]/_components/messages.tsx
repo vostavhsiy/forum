@@ -81,12 +81,30 @@ const Messages: FC<Props> = ({ messages, conversation }) => {
       {/*)}*/}
       <div className=" w-full h-full overflow-auto">
         {messages.map((message, idx) => {
+          const isLastOfDay =
+            idx !== messages.length - 1 &&
+            message.createdAt.getDate() !==
+              messages[idx + 1].createdAt.getDate();
           return (
-            <MessageBox
-              key={message.id}
-              data={message}
-              isLast={idx === messages.length - 1}
-            />
+            <>
+              <MessageBox
+                key={message.id}
+                data={message}
+                isLast={idx === messages.length - 1}
+              />
+              {isLastOfDay && (
+                <div className={"flex justify-center my-8 font-semibold "}>
+                  {messages[idx + 1].createdAt.getDate() +
+                    "." +
+                    (messages[idx + 1].createdAt.getMonth() + 1 < 10
+                      ? "0"
+                      : "") +
+                    (messages[idx + 1].createdAt.getMonth() + 1) +
+                    "." +
+                    messages[idx + 1].createdAt.getFullYear()}
+                </div>
+              )}
+            </>
           );
         })}
         <div ref={bottom}></div>
