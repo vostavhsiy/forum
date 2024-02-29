@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/configs/AuthConfig";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { FollowButton } from "@/components/FollowButton";
 import { Post } from "@/app/(browse)/(main)/blog/_components/post";
 import Link from "next/link";
@@ -28,7 +28,7 @@ const UserPage: NextPage<Props> = async ({ params }) => {
   const user = await getUserById(params.id);
 
   if (!user) {
-    return redirect("/users/1");
+    return notFound();
   }
 
   if (user.id === authUser?.id) {

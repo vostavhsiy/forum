@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/configs/AuthConfig";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Post } from "@/app/(browse)/(main)/blog/_components/post";
 import { Pagination } from "@/components/Pagination";
 import { getTagById } from "@/services/tags.service";
@@ -25,7 +25,7 @@ const TagPage: NextPage<Props> = async ({ params, searchParams }) => {
   const tag = await getTagById(params.id);
 
   if (!tag) {
-    redirect("/tags/1");
+    return notFound();
   }
 
   const session = await getServerSession(authConfig);

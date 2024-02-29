@@ -1,6 +1,6 @@
 import { NotFoundImage } from "@/components/notFoundImage";
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div className={"w-full h-full flex flex-col items-center justify-center"}>
       <NotFoundImage />
@@ -9,4 +9,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

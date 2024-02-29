@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { auth } from "@/actions/auth.actions";
 import { CreateCommentForm } from "@/app/(browse)/(main)/post/[id]/_components/createCommentForm";
 import { Comment } from "@/app/(browse)/(main)/post/[id]/_components/comment";
@@ -25,7 +25,7 @@ const PostPage: NextPage<Props> = async ({ params }) => {
 
   const post = await getPostForPostPage(params.id);
   if (!post) {
-    redirect("/blog");
+    return notFound();
   }
 
   await addPostView(post.id);

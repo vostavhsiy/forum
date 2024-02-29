@@ -7,6 +7,7 @@ import { Pagination } from "@/components/Pagination";
 import { auth } from "@/actions/auth.actions";
 import { getUsers } from "@/services/users.service";
 import { Filter } from "@/app/(browse)/(main)/users/[page]/_components/filter";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: {
@@ -24,6 +25,10 @@ const UsersPage: NextPage<Props> = async ({ params, searchParams }) => {
   const page = params.page ? +params.page - 1 : 0;
   const size = +(searchParams.size || 8);
   const filter = searchParams.filter;
+
+  if (isNaN(page)) {
+    return notFound();
+  }
 
   const { users, total } = await getUsers(
     page,
