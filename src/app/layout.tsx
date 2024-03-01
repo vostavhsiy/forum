@@ -23,7 +23,7 @@ export default async function RootLayout({
   const user = await auth();
 
   return (
-    <html lang="en">
+    <html lang="ru">
       <body
         className={cn(
           inter.className,
