@@ -11,9 +11,7 @@ import { usePathname } from "next/navigation";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { setNewMessage } from "@/store/messenger/reducer";
 import Link from "next/link";
-import { setPlayer } from "@/store/service/reducer";
 import { Player } from "@/lib/audio";
-import { useAppSelector } from "@/hooks/useAppSelector";
 
 export const socket = io(String(process.env.NEXT_PUBLIC_SOCKET_URL));
 

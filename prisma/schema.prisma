@@ -24,6 +24,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
+  active        Boolean        @default(false)
+  lastVisit     DateTime       @default(now())
   banned        Boolean        @default(false)
   role          String         @default("user")
   posts         Post[]         @relation("posts")

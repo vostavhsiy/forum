@@ -188,6 +188,33 @@ export const updatePassword = async (link: string, password: string) => {
   }
 };
 
+export const setActive = async (active = true) => {
+  const session = await getServerSession(authConfig);
+  if (!session?.user) {
+    return null;
+  }
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: session.user.id,
+      },
+      data: {
+        active,
+        lastVisit: new Date(),
+      },
+    });
+    if (!user) {
+      return {
+        ok: false,
+        error: "Ошибка!",
+      };
+    }
+  } catch (e) {
+    const err = e as Error;
+    console.log(err.message);
+  }
+};
+
 export const revalidate = async (paths: string[]) => {
   paths.forEach((path) => {
     revalidatePath(path);
