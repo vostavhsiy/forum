@@ -17,7 +17,7 @@ const BlogPage: NextPage<Props> = async ({ searchParams }) => {
   const filter = searchParams.filter;
 
   return (
-    <div className="mb-[100px] flex flex-col gap-4">
+    <div className="mb-[40px] flex flex-col gap-4 p-10 pt-8">
       <div className="w-full flex items-center justify-between">
         <h1 className="text-lg font-semibold">Посты</h1>
         <div>
