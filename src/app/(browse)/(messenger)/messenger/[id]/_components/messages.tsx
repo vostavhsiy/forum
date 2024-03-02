@@ -4,8 +4,6 @@ import React, { FC, useEffect, useRef } from "react";
 import { MessageBox } from "@/app/(browse)/(messenger)/messenger/[id]/_components/message";
 import { Conversation, Message } from "@prisma/client";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { setNewMessage } from "@/store/messenger/reducer";
 import {
@@ -80,6 +78,17 @@ const Messages: FC<Props> = ({ messages, conversation }) => {
       {/*  </Button>*/}
       {/*)}*/}
       <div className=" w-full h-full overflow-auto">
+        {!!messages.length && (
+          <div className={"flex justify-center my-8 mt-4 font-semibold "}>
+            {(messages[0].createdAt.getDate() < 10 ? "0" : "") +
+              messages[0].createdAt.getDate() +
+              "." +
+              (messages[0].createdAt.getMonth() + 1 < 10 ? "0" : "") +
+              (messages[0].createdAt.getMonth() + 1) +
+              "." +
+              messages[0].createdAt.getFullYear()}
+          </div>
+        )}
         {messages.map((message, idx) => {
           const isLastOfDay =
             idx !== messages.length - 1 &&
@@ -94,7 +103,8 @@ const Messages: FC<Props> = ({ messages, conversation }) => {
               />
               {isLastOfDay && (
                 <div className={"flex justify-center my-8 font-semibold "}>
-                  {messages[idx + 1].createdAt.getDate() +
+                  {(messages[idx + 1].createdAt.getDate() < 10 ? "0" : "") +
+                    messages[idx + 1].createdAt.getDate() +
                     "." +
                     (messages[idx + 1].createdAt.getMonth() + 1 < 10
                       ? "0"
