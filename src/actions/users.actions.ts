@@ -608,6 +608,7 @@ export const seeUserNotifications = async ({ userId }: { userId: string }) => {
         type: {
           notIn: ["message"],
         },
+        seen: false,
       },
       data: {
         seen: true,
@@ -664,9 +665,12 @@ export const deleteUserNotifications = async ({
             expires: {
               lt: new Date(),
             },
-            seen: false,
+            seen: true,
           },
         },
+      },
+      include: {
+        notifications: true,
       },
     });
 
