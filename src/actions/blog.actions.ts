@@ -452,6 +452,10 @@ export const createComment = async ({
           },
         },
       },
+      include: {
+        post: true,
+        author: true,
+      },
     });
     if (!comment) {
       return {
@@ -459,10 +463,23 @@ export const createComment = async ({
         error: "Ошибка",
       };
     }
+    const notification = await prisma.notification.create({
+      data: {
+        userId: comment.post.userId,
+        type: "post",
+        text: `Новый комментарий от ${comment.author.name}.`,
+        title: "Новый комментарий",
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+        link: `/post/${comment.post.id}`,
+      },
+    });
     revalidatePath("/post/[id]", "page");
     return {
       ok: true,
       error: null,
+      ids: [comment.post.userId],
+      name: comment.author.name,
+      postId: comment.post.id,
     };
   } catch (e) {
     const err = e as Error;
@@ -548,6 +565,14 @@ export const createAnswer = async ({
           },
         },
       },
+      include: {
+        author: true,
+        comment: {
+          include: {
+            author: true,
+          },
+        },
+      },
     });
     if (!answer) {
       return {
@@ -555,10 +580,23 @@ export const createAnswer = async ({
         error: "Ошибка",
       };
     }
+    const notification = await prisma.notification.create({
+      data: {
+        userId: answer.comment.author.id,
+        type: "post",
+        text: `Новый ответ к комментарию от ${answer.author.name}.`,
+        title: "Новый комментарий",
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+        link: `/post/${answer.comment.postid}`,
+      },
+    });
     revalidatePath("/post/[id]", "page");
     return {
       ok: true,
       error: null,
+      ids: [answer.comment.author.id],
+      name: answer.author.name,
+      postId: answer.comment.postid,
     };
   } catch (e) {
     const err = e as Error;

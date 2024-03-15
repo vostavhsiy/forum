@@ -7,6 +7,7 @@ import { FormikInput } from "@/components/FormikInput";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { createComment } from "@/actions/blog.actions";
+import { socket } from "@/components/Notifications";
 
 interface Props {
   postId: string;
@@ -26,6 +27,12 @@ const CreateCommentForm: FC<Props> = ({ postId }) => {
         startTransition(() => {
           createComment({ postId, text: values.text }).then((res) => {
             if (res.ok) {
+              socket.send({
+                type: "specific",
+                data: `Новый комментарий от ${res.name}!`,
+                ids: res.ids,
+                link: res.postId ? `/post/${res.postId}` : "",
+              });
               toast.success("Комментарий добавлен!");
               resetForm();
             } else {
