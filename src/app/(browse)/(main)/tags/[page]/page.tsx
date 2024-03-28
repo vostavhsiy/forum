@@ -63,7 +63,7 @@ const TagsPage: NextPage<Props> = async ({ params, searchParams }) => {
       <Pagination
         page={page + 1}
         size={total ? size : 1}
-        total={total || 1}
+        total={total}
         baseLink={"/tags"}
       />
     </div>

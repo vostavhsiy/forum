@@ -25,7 +25,7 @@ export const Pagination: FC<Props> = ({
   return (
     <div className="flex items-center gap-4 w-full justify-end mt-[30px]">
       <h3>
-        Страница {page} из {Math.ceil(total / size)}
+        Страница {page} из {Math.ceil(total / size) || 1}
       </h3>
       <div className="flex items-center gap-2">
         <Button disabled={page <= 1} asChild={page > 1}>
