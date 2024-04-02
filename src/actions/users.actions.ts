@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/configs/AuthConfig";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { socket } from "@/components/Notifications";
+import { SHA256 as sha256 } from "crypto-js";
 import { auth } from "@/actions/auth.actions";
 import { changeUserAvatar } from "@/services/files.services";
 
@@ -171,29 +171,38 @@ export const editProfile = async (payload: FormData) => {
         error: "Не авторизованы",
       };
     }
-    const data = {
-      name: payload.get("name") ? String(payload.get("name")) : "",
-      image: (payload.get("image") as File) || null,
-    };
-    if (!data.name) {
+    const image = await changeUserAvatar(
+      payload.get("image") as File,
+      authUser.image || undefined,
+    );
+    const password = payload.get("password")
+      ? String(payload.get("password"))
+      : null;
+    const data = password
+      ? {
+          name: payload.get("name") ? String(payload.get("name")) : "",
+          password: payload.get("password")
+            ? sha256(String(payload.get("password"))).toString()
+            : "",
+          //@ts-ignore
+          image: image ? image.Location : authUser.image,
+        }
+      : {
+          name: payload.get("name") ? String(payload.get("name")) : "",
+          //@ts-ignore
+          image: image ? image.Location : authUser.image,
+        };
+    if (!data.name && !data.password) {
       return {
         ok: false,
         error: "Плохие данные!",
       };
     }
-    const image = await changeUserAvatar(
-      data.image,
-      authUser.image || undefined,
-    );
     const user = await prisma.user.update({
       where: {
         id: authUser.id,
       },
-      data: {
-        name: data.name,
-        //@ts-ignore
-        image: image ? image.Location : authUser.image,
-      },
+      data,
     });
     if (!user) {
       return {
