@@ -124,6 +124,7 @@ const EditPostForm: FC<Props> = ({ post }) => {
                 />
                 {post.image && (
                   <Button
+                    disabled={isPending}
                     variant={"destructive"}
                     onClick={deleteHandler}
                     type={"button"}
