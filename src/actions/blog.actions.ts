@@ -483,7 +483,8 @@ export const createComment = async ({
     return {
       ok: true,
       error: null,
-      ids: [comment.post.userId],
+      ids:
+        comment.author.id !== comment.post.userId ? [comment.post.userId] : [],
       name: comment.author.name,
       postId: comment.post.id,
     };
@@ -600,7 +601,10 @@ export const createAnswer = async ({
     return {
       ok: true,
       error: null,
-      ids: [answer.comment.author.id],
+      ids:
+        answer.author.id !== answer.comment.author.id
+          ? [answer.comment.author.id]
+          : [],
       name: answer.author.name,
       postId: answer.comment.postid,
     };
