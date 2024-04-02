@@ -11,7 +11,7 @@ const ProfileEditPage = async () => {
   return (
     <div className="mb-[100px] p-4 flex flex-col gap-10">
       <h1 className="text-lg font-semibold">Редактирование профиля</h1>
-      <EditForm name={user.name} />
+      <EditForm name={user.name} password={user.password} />
     </div>
   );
 };

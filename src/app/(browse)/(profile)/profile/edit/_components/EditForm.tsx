@@ -9,9 +9,10 @@ import { FormikInput } from "@/components/FormikInput";
 
 interface Props {
   name: string | null;
+  password: string | null;
 }
 
-const EditForm: FC<Props> = ({ name }) => {
+const EditForm: FC<Props> = ({ name, password }) => {
   const image = useRef<HTMLInputElement>(null);
 
   const [isPending, startTransition] = useTransition();
@@ -20,6 +21,7 @@ const EditForm: FC<Props> = ({ name }) => {
     <Formik
       initialValues={{
         name: name || "",
+        password: password || "",
         image: "",
       }}
       onSubmit={async (values, { setFieldValue }) => {
@@ -27,7 +29,13 @@ const EditForm: FC<Props> = ({ name }) => {
         if (values.name.length < 5) {
           return toast.error("Имя должно быть не короче 5 символов!");
         }
+        if (values.password.length < 5) {
+          return toast.error("Пароль должен быть не короче 5 символов!");
+        }
         data.set("name", values.name);
+        if (values.password !== password) {
+          data.set("password", values.password);
+        }
         if (image.current?.files && image.current.files[0]) {
           data.set("image", image.current.files[0]);
         }
@@ -46,6 +54,11 @@ const EditForm: FC<Props> = ({ name }) => {
       {() => (
         <Form className="flex flex-col gap-3 lg:w-1/2">
           <FormikInput name={"name"} placeholder="Новое имя" />
+          <FormikInput
+            name={"password"}
+            type="password"
+            placeholder="Новый пароль"
+          />
           <FormikInput name={"image"} type={"file"} fileRef={image} />
           <Button disabled={isPending} type={"submit"} className="mt-3">
             Изменить
