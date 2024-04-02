@@ -127,7 +127,10 @@ export const createPost = async (payload: FormData) => {
 
 export const editPostInPanel = async (id: string, payload: FormData) => {
   const user = await auth();
-  if (!["admin", "editor"].find((r) => r === user?.role)) {
+  if (
+    !["admin", "editor"].find((r) => r === user?.role) &&
+    user?.posts.every((post) => post.userId !== user.id)
+  ) {
     return {
       ok: false,
       error: "Не авторизованы!",
@@ -189,7 +192,10 @@ export const editPostInPanel = async (id: string, payload: FormData) => {
 
 export const deletePostPicture = async (id: string, url: string) => {
   const user = await auth();
-  if (!["admin", "editor"].find((r) => r === user?.role)) {
+  if (
+    !["admin", "editor"].find((r) => r === user?.role) &&
+    user?.posts.every((post) => post.userId !== user.id)
+  ) {
     return {
       ok: false,
       error: "Не авторизованы!",

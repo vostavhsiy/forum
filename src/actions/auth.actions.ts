@@ -21,6 +21,7 @@ export const auth = async () => {
       },
       include: {
         favourites: true,
+        posts: true,
         notifications: {
           orderBy: {
             createdAt: "desc",

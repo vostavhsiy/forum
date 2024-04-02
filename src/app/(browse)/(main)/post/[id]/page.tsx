@@ -37,9 +37,9 @@ const PostPage: NextPage<Props> = async ({ params }) => {
           "absolute top-[10px] right-[10px] flex items-center gap-8 text-[10px] lg:text-sm font-semibold"
         }
       >
-        {user && ["admin", "editor"].includes(user.role) && (
-          <EditPostForm post={post} />
-        )}
+        {user &&
+          (["admin", "editor"].includes(user.role) ||
+            post.userId === user.id) && <EditPostForm post={post} />}
         {user && ["admin", "editor"].includes(user.role) && (
           <DeleteButton post={post} user={user} />
         )}
