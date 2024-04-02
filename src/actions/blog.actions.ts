@@ -469,16 +469,18 @@ export const createComment = async ({
         error: "Ошибка",
       };
     }
-    const notification = await prisma.notification.create({
-      data: {
-        userId: comment.post.userId,
-        type: "post",
-        text: `Новый комментарий от ${comment.author.name}.`,
-        title: "Новый комментарий",
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
-        link: `/post/${comment.post.id}`,
-      },
-    });
+    if (comment.author.id !== comment.post.userId) {
+      const notification = await prisma.notification.create({
+        data: {
+          userId: comment.post.userId,
+          type: "post",
+          text: `Новый комментарий от ${comment.author.name}.`,
+          title: "Новый комментарий",
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+          link: `/post/${comment.post.id}`,
+        },
+      });
+    }
     revalidatePath("/post/[id]", "page");
     return {
       ok: true,
@@ -587,16 +589,18 @@ export const createAnswer = async ({
         error: "Ошибка",
       };
     }
-    const notification = await prisma.notification.create({
-      data: {
-        userId: answer.comment.author.id,
-        type: "post",
-        text: `Новый ответ к комментарию от ${answer.author.name}.`,
-        title: "Новый комментарий",
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
-        link: `/post/${answer.comment.postid}`,
-      },
-    });
+    if (answer.author.id !== answer.comment.author.id) {
+      const notification = await prisma.notification.create({
+        data: {
+          userId: answer.comment.author.id,
+          type: "post",
+          text: `Новый ответ к комментарию от ${answer.author.name}.`,
+          title: "Новый комментарий",
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 4),
+          link: `/post/${answer.comment.postid}`,
+        },
+      });
+    }
     revalidatePath("/post/[id]", "page");
     return {
       ok: true,
