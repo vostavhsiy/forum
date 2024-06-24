@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { PostCard } from "@/app/(browse)/(main)/_components/sidebar/PostCard";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 const usefulLinks = [
   {
@@ -52,7 +53,7 @@ const Sidebar = async () => {
                   key={user.id}
                   className="flex items-center gap-2"
                 >
-                  <Image
+                  <ImageWithFallback
                     src={user.image || "/user.png"}
                     alt={"user"}
                     width={500}

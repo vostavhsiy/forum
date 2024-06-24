@@ -13,6 +13,7 @@ import { createConversation } from "@/actions/chat.actions";
 import { useRouter } from "next/navigation";
 import { MessageCircle } from "lucide-react";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   user: User;
@@ -83,7 +84,7 @@ const UserCard: FC<Props> = ({
       )}
     >
       <div className="flex items-center gap-4">
-        <Image
+        <ImageWithFallback
           src={user.image || "/user.png"}
           alt={"user"}
           width={500}

@@ -9,6 +9,7 @@ import { LoaderLink } from "@/components/LoaderLink";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Heart, HeartCrack } from "lucide-react";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   post: any;
@@ -77,7 +78,7 @@ const Post: FC<Props> = ({ post, auth, favourite }) => {
           href={`/user/${post.author.id}`}
           className="flex items-center gap-3"
         >
-          <Image
+          <ImageWithFallback
             src={post.author.image || "/user.png"}
             alt={"user"}
             width={500}

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { FollowButton } from "@/components/FollowButton";
 import { getUserWithSubscribes } from "@/services/users.service";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 const ProfileSubscribesPage = async () => {
   const session = await getServerSession(authConfig);
@@ -30,7 +31,7 @@ const ProfileSubscribesPage = async () => {
                   href={`/user/${sub.id}`}
                   className="flex items-center gap-5"
                 >
-                  <Image
+                  <ImageWithFallback
                     src={sub.image || "/user.png"}
                     alt={"user"}
                     width={500}

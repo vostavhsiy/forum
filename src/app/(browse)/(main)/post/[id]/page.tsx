@@ -13,6 +13,7 @@ import { addPostView } from "@/actions/blog.actions";
 import { LoaderLink } from "@/components/LoaderLink";
 import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
 import { DeleteButton } from "@/app/(browse)/(main)/post/[id]/_components/DeleteButton";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   params: {
@@ -56,8 +57,9 @@ const PostPage: NextPage<Props> = async ({ params }) => {
         <h1 className="text-xl font-semibold">{post.title}</h1>
         {post.image && (
           <div className="w-full flex justify-center items-center">
-            <Image
+            <ImageWithFallback
               src={post.image}
+              fallback={"/image404.jpg"}
               alt={"post"}
               width={1000}
               height={1000}
@@ -70,7 +72,7 @@ const PostPage: NextPage<Props> = async ({ params }) => {
           href={`/user/${post.author.id}`}
           className="flex items-center gap-5"
         >
-          <Image
+          <ImageWithFallback
             src={post.author.image || "/user.png"}
             alt={"user"}
             width={500}

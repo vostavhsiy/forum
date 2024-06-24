@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   conversation: Conversation & {
@@ -51,7 +52,7 @@ const MessagesHeader: FC<Props> = ({ conversation }) => {
   return (
     <div className="w-full h-full flex items-center border-b-2 pb-2">
       <LoaderLink href={`/user/${user.id}`} className="flex items-center gap-6">
-        <Image
+        <ImageWithFallback
           key={user.id}
           src={user.image || "/user.png"}
           alt={"user"}

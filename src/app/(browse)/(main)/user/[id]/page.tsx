@@ -15,6 +15,8 @@ import { createConversation } from "@/actions/chat.actions";
 import { MessageCircle } from "lucide-react";
 import { MessageButton } from "@/app/(browse)/(main)/user/[id]/_components/MessageButton";
 import { ends } from "@/lib/word-ends";
+import React from "react";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   params: {
@@ -38,7 +40,7 @@ const UserPage: NextPage<Props> = async ({ params }) => {
   return (
     <div className="flex flex-col gap-5 mb-[100px]">
       <div className="flex items-center gap-5 lg:gap-10">
-        <Image
+        <ImageWithFallback
           src={user.image || "/user.png"}
           alt={"user"}
           width={500}

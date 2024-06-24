@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   conversation: Conversation & {
@@ -89,7 +90,7 @@ const SidebarConversationCard: FC<Props> = ({ conversation }) => {
           "bg-destructive text-white",
       )}
     >
-      <Image
+      <ImageWithFallback
         src={otherUser.image || "/user.png"}
         alt={"user"}
         width={500}

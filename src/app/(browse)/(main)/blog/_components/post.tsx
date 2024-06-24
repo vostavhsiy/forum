@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
 import { ends } from "@/lib/word-ends";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   post: any;
@@ -127,7 +128,7 @@ const Post: FC<Props> = ({ post, auth, favourite, inBlog, inAdminPanel }) => {
           }
           className="flex items-center gap-3"
         >
-          <Image
+          <ImageWithFallback
             src={post.author.image || "/user.png"}
             alt={"user"}
             width={500}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@/actions/auth.actions";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 const ProfileButton = async () => {
   const user = await auth();
@@ -13,7 +14,7 @@ const ProfileButton = async () => {
   }
   return (
     <LoaderLink href={"/profile"}>
-      <Image
+      <ImageWithFallback
         src={user.image || "/user.png"}
         alt={"profile"}
         width={500}

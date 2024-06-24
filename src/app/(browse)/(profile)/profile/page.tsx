@@ -10,6 +10,7 @@ import { FollowButton } from "@/components/FollowButton";
 import { getUserById } from "@/services/users.service";
 import { auth } from "@/actions/auth.actions";
 import { LoaderLink } from "@/components/LoaderLink";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig);
@@ -23,7 +24,7 @@ export default async function ProfilePage() {
   return (
     <div className="flex flex-col gap-10 mb-[100px]">
       <div className="flex flex-col lg:flex-row items-center gap-10">
-        <Image
+        <ImageWithFallback
           src={user.image || "/user.png"}
           alt={"user"}
           width={500}

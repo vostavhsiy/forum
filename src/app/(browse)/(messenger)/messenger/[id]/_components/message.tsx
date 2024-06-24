@@ -11,6 +11,7 @@ import { download } from "@/services/files.services";
 import { downloadMessageFile } from "@/actions/chat.actions";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface MessageBoxProps {
   data: Message & {
@@ -70,8 +71,9 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
       <div className={body}>
         <div className={message}>
           {data.image && (
-            <Image
+            <ImageWithFallback
               src={data.image}
+              fallback={"/image404.jpg"}
               alt="Image"
               onClick={() => setImageModalOpen(true)}
               width={1000}

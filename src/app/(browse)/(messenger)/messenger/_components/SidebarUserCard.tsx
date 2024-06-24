@@ -5,6 +5,7 @@ import Image from "next/image";
 import { User } from "@prisma/client";
 import { createConversation } from "@/actions/chat.actions";
 import { useRouter } from "next/navigation";
+import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
   user: User;
@@ -28,7 +29,7 @@ const SidebarUserCard: FC<Props> = ({ user }) => {
   };
 
   return (
-    <Image
+    <ImageWithFallback
       key={user.id}
       src={user.image || "/user.png"}
       alt={"user"}
