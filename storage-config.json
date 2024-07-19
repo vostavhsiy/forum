@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["http://localhost:3000", "https://forum-amber.vercel.app", "https://ivtipt-forum.vercel.app"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]

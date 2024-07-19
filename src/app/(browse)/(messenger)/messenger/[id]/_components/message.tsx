@@ -1,17 +1,23 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useTransition,
+} from "react";
 import { useSession } from "next-auth/react";
 import clsx from "clsx";
 import { format } from "date-fns";
 import Image from "next/image";
 import { Message } from "@prisma/client";
 import { CheckCheck, File } from "lucide-react";
-import { download } from "@/services/files.services";
+import { download, storage } from "@/services/files.services";
 import { downloadMessageFile } from "@/services/files.services";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { ImageWithFallback } from "@/components/FallbackImage";
+import { getMetadata, ref } from "@firebase/storage";
 
 interface MessageBoxProps {
   data: Message & {
@@ -45,8 +51,15 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const [fetching, setFetching] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const session = useSession();
+
+  useLayoutEffect(() => {
+    if (data.file) {
+      setFileName(ref(storage, data.file).name.split("---").slice(-1)[0]);
+    }
+  }, []);
 
   const isOwn = session?.data?.user?.email === data?.sender?.email;
 
@@ -91,21 +104,12 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 if (fetching) return;
                 if (data.file) {
                   setFetching(true);
-                  downloadMessageFile(data.file as string).then((file) => {
-                    if (
-                      file &&
-                      file.data.Body &&
-                      file.data.ContentType &&
-                      data.file
-                    ) {
+                  downloadMessageFile(data.file as string).then((data) => {
+                    if (data.blob) {
                       download(
-                        //@ts-ignore
-                        file.data.Body.data
-                          ? //@ts-ignore
-                            file.data.Body.data
-                          : (file.data.Body as Uint8Array),
-                        file.data.ContentType,
-                        data.file.split("---").slice(-1)[0],
+                        data.blob,
+                        data.contentType || "image/jpeg",
+                        fileName || data.name || "audio.mp3",
                       ).then((res) => {
                         setFetching(false);
                         toast.success("Файл скачан!");
@@ -115,7 +119,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
                 }
               }}
             >
-              <span>{data.file.split("---").slice(-1)}</span>
+              <span>{fileName}</span>
               <File />
             </div>
           )}

@@ -175,7 +175,7 @@ export const sendMessage = async (
   const isImage = isFileImage(data.image);
   const messageFile = isImage
     ? await uploadMessageImage(data.image)
-    : await uploadMessageFile(data.image);
+    : await uploadMessageFile(data.image, data.fileName);
 
   //@ts-ignore
   const messageFileUrl = messageFile || "";

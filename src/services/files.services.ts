@@ -10,6 +10,7 @@ import {
   getStorage,
   ref,
   uploadBytes,
+  getMetadata,
 } from "@firebase/storage";
 
 const firebaseConfig = {
@@ -22,7 +23,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+export const storage = getStorage(app);
 
 const storageRoutes = {
   usersAvatars: "users-avatars/",
@@ -68,6 +69,7 @@ export const uploadPostImage = async (file?: File) => {
 
 export const changePostImage = async (file?: File, oldImageUrl?: string) => {
   if (!file) return false;
+  if (!oldImageUrl) return uploadPostImage(file);
   const imageRef = ref(storage, oldImageUrl);
   const image = await uploadBytes(imageRef, file);
   return getDownloadURL(image.ref);
@@ -87,17 +89,25 @@ export const uploadMessageImage = async (file?: File) => {
   return getDownloadURL(image.ref);
 };
 
-export const uploadMessageFile = async (file?: File) => {
+export const uploadMessageFile = async (file?: File, fileName?: string) => {
   if (!file) return false;
   const id = uuid();
-  const imageRef = ref(storage, storageRoutes.messagesFiles + id);
+  const imageRef = ref(
+    storage,
+    storageRoutes.messagesFiles + id + "---" + fileName,
+  );
   const image = await uploadBytes(imageRef, file);
   return getDownloadURL(image.ref);
 };
 
 export const downloadMessageFile = async (url: string) => {
   const imageRef = ref(storage, url);
-  await getBlob(imageRef);
+  const metadata = await getMetadata(imageRef);
+  const blob = await getBlob(imageRef);
+  return {
+    blob,
+    ...metadata,
+  };
 };
 
 export const download = async (file: Blob, type: string, name: string) => {
