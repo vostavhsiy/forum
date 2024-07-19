@@ -51,7 +51,6 @@ export const uploadUserAvatar = async (file?: File) => {
 };
 
 export const changeUserAvatar = async (file?: File, oldImageUrl?: string) => {
-  console.log(oldImageUrl);
   if (!file) return false;
   if (!oldImageUrl) return uploadUserAvatar(file);
   const imageRef = ref(storage, oldImageUrl);

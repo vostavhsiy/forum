@@ -64,8 +64,7 @@ export const createPost = async (payload: FormData) => {
         title: String(data.title),
         text: String(data.text),
         userId: session.user.id,
-        //@ts-ignore
-        image: image ? image.Location : "",
+        image: image || "",
         views: 0,
         tags: {
           connect: tags,
@@ -159,8 +158,7 @@ export const editPostInPanel = async (id: string, payload: FormData) => {
       data: {
         title: String(data.title),
         text: String(data.text),
-        //@ts-ignore
-        image: image ? image.Location : "",
+        image: image || "",
       },
     });
     if (!post) {

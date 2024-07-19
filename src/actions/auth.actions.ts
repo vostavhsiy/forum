@@ -70,8 +70,7 @@ export const signUp = async (payload: FormData) => {
       data: {
         name: data.name,
         password: sha256(data.password).toString(),
-        // @ts-ignore
-        image: image ? image.Location : "",
+        image: image || "",
         email: data.email,
         role: "user",
       },

@@ -178,7 +178,7 @@ export const sendMessage = async (
     : await uploadMessageFile(data.image);
 
   //@ts-ignore
-  const messageFileUrl = messageFile ? messageFile.Location : "";
+  const messageFileUrl = messageFile || "";
 
   try {
     const newMessage = await prisma.message.create({

@@ -175,6 +175,7 @@ export const editProfile = async (payload: FormData) => {
       payload.get("image") as File,
       authUser.image || undefined,
     );
+
     const password = payload.get("password")
       ? String(payload.get("password"))
       : null;
@@ -184,13 +185,11 @@ export const editProfile = async (payload: FormData) => {
           password: payload.get("password")
             ? sha256(String(payload.get("password"))).toString()
             : "",
-          //@ts-ignore
-          image: image ? image.Location : authUser.image,
+          image: image || authUser.image,
         }
       : {
           name: payload.get("name") ? String(payload.get("name")) : "",
-          //@ts-ignore
-          image: image ? image.Location : authUser.image,
+          image: image || authUser.image,
         };
     if (!data.name && !data.password) {
       return {
