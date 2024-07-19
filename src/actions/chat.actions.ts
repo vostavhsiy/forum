@@ -175,8 +175,8 @@ export const sendMessage = async (
 
   const isImage = isFileImage(data.image);
   const messageFile = isImage
-    ? await uploadMessageImage(data.image, data.fileName)
-    : await uploadMessageFile(data.image, data.fileName);
+    ? await uploadMessageImage(data.image)
+    : await uploadMessageFile(data.image);
 
   //@ts-ignore
   const messageFileUrl = messageFile ? messageFile.Location : "";
@@ -397,11 +397,4 @@ export const receiveNewMessage = async () => {
 export const receiveNewNotification = async () => {
   revalidatePath("/messenger", "page");
   revalidatePath("/messenger/[id]", "page");
-};
-
-export const downloadMessageFile = async (url: string) => {
-  const file = await s3.Download(
-    url.split("https://ivtipt-forum.storage.yandexcloud.net").slice(-1)[0],
-  );
-  return file;
 };

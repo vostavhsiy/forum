@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Message } from "@prisma/client";
 import { CheckCheck, File } from "lucide-react";
 import { download } from "@/services/files.services";
-import { downloadMessageFile } from "@/actions/chat.actions";
+import { downloadMessageFile } from "@/services/files.services";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { ImageWithFallback } from "@/components/FallbackImage";
