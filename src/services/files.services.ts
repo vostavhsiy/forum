@@ -42,16 +42,6 @@ export const transliteName = (fileName: string) => {
   );
 };
 
-// Инициализация
-export const s3 = new EasyYandexS3({
-  auth: {
-    accessKeyId: process.env.STORAGE_ACCESS_KEY || "",
-    secretAccessKey: process.env.STORAGE_SECRET_KEY || "",
-  },
-  Bucket: "ivtipt-forum",
-  debug: true,
-});
-
 export const uploadUserAvatar = async (file?: File) => {
   if (!file) return false;
   const id = uuid();
@@ -61,7 +51,9 @@ export const uploadUserAvatar = async (file?: File) => {
 };
 
 export const changeUserAvatar = async (file?: File, oldImageUrl?: string) => {
+  console.log(oldImageUrl);
   if (!file) return false;
+  if (!oldImageUrl) return uploadUserAvatar(file);
   const imageRef = ref(storage, oldImageUrl);
   const image = await uploadBytes(imageRef, file);
   return getDownloadURL(image.ref);

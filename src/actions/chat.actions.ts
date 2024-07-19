@@ -5,7 +5,6 @@ import { authConfig } from "@/lib/configs/AuthConfig";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import {
-  s3,
   uploadMessageFile,
   uploadMessageImage,
   uploadUserAvatar,
