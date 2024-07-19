@@ -95,7 +95,7 @@ const Messages: FC<Props> = ({ messages, conversation }) => {
             message.createdAt.getDate() !==
               messages[idx + 1].createdAt.getDate();
           return (
-            <>
+            <div key={message.id}>
               <MessageBox
                 key={message.id}
                 data={message}
@@ -114,7 +114,7 @@ const Messages: FC<Props> = ({ messages, conversation }) => {
                     messages[idx + 1].createdAt.getFullYear()}
                 </div>
               )}
-            </>
+            </div>
           );
         })}
         <div ref={bottom}></div>

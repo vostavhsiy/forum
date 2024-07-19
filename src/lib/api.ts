@@ -113,7 +113,9 @@ export class Api {
       .get<{
         posts: IPost[];
         total: number;
-      }>(`/posts?${search ? `search=${search}` : ""}${size ? `&size=${size}` : ""}${page ? `&page=${page}` : ""}${tag ? `&tag=${tag}` : ""}${favs ? `&favs=${favs}` : ""}${sort ? `&sort=${sort}` : ""}`)
+      }>(
+        `/posts?${search ? `search=${search}` : ""}${size ? `&size=${size}` : ""}${page ? `&page=${page}` : ""}${tag ? `&tag=${tag}` : ""}${favs ? `&favs=${favs}` : ""}${sort ? `&sort=${sort}` : ""}`,
+      )
       .then((res) => {
         return res.data;
       });
@@ -202,13 +204,13 @@ export class Api {
     size: number;
     search?: string;
   }) {
-    console.log(search);
-
     return instance
       .get<{
         users: IUser[];
         total: number;
-      }>(`/users/${page || 0}?size=${size || 4}${search ? `&search=${search}` : ""}`)
+      }>(
+        `/users/${page || 0}?size=${size || 4}${search ? `&search=${search}` : ""}`,
+      )
       .then((res) => {
         return res.data;
       });
@@ -233,7 +235,9 @@ export class Api {
       .get<{
         tags: ITag[];
         total: number;
-      }>(`/tags?${search ? `search=${search}` : ""}${size ? `&size=${size}` : ""}${page ? `&page=${page}` : ""}`)
+      }>(
+        `/tags?${search ? `search=${search}` : ""}${size ? `&size=${size}` : ""}${page ? `&page=${page}` : ""}`,
+      )
       .then((res) => {
         return res.data;
       });
