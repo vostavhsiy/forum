@@ -59,7 +59,6 @@ const Post: FC<Props> = ({ post, auth, favourite, inBlog, inAdminPanel }) => {
     }
     startTransition(() => {
       deletePost(post.id).then((res) => {
-        console.log(res);
         if (res.ok) {
           toast.success("Пост удален!");
         } else {

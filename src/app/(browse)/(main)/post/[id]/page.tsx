@@ -14,6 +14,7 @@ import { LoaderLink } from "@/components/LoaderLink";
 import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
 import { DeleteButton } from "@/app/(browse)/(main)/post/[id]/_components/DeleteButton";
 import { ImageWithFallback } from "@/components/FallbackImage";
+import { PostText } from "@/app/(browse)/(main)/post/[id]/_components/PostText";
 
 interface Props {
   params: {
@@ -30,6 +31,11 @@ const PostPage: NextPage<Props> = async ({ params }) => {
   }
 
   await addPostView(post.id);
+
+  const text = post.text
+    .split(/\r\n|\r|\n/g)
+    .map((p) => (p ? p : "<br/>"))
+    .join("");
 
   return (
     <div className="relative p-4 pt-12 mb-[100px] flex flex-col gap-10">
@@ -67,7 +73,7 @@ const PostPage: NextPage<Props> = async ({ params }) => {
             />
           </div>
         )}
-        <p>{post.text}</p>
+        <PostText text={text} />
         <LoaderLink
           href={`/user/${post.author.id}`}
           className="flex items-center gap-5"
