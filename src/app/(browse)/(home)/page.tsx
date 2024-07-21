@@ -4,12 +4,10 @@ import { HomeSlider } from "@/app/(browse)/(home)/_components/HomeSlider";
 import { getPosts } from "@/services/posts.service";
 import { Post } from "@/app/(browse)/(home)/_components/PostCard";
 import { cn } from "@/lib/utils";
-import { Satisfy } from "next/font/google";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/lib/configs/AuthConfig";
+import { Oswald } from "next/font/google";
 import { auth } from "@/actions/auth.actions";
 
-const satisfy = Satisfy({ subsets: ["latin"], weight: ["400"] });
+const oswald = Oswald({ subsets: ["cyrillic"], weight: ["400", "600", "700"] });
 
 export default async function Home() {
   const user = await auth();
@@ -18,13 +16,13 @@ export default async function Home() {
 
   return (
     <div className="relative h-full overflow-auto pt-20 flex flex-col justify-between  max-w-[100vw] lg:max-w-none">
-      <Image
-        src={"/bg.png"}
-        alt={"bg"}
-        width={1500}
-        height={1500}
-        className="select-none opacity-10 fixed top-0 left-0 w-full h-full object-center object-cover -z-10"
-      />
+      {/*<Image*/}
+      {/*  src={"/bg.png"}*/}
+      {/*  alt={"bg"}*/}
+      {/*  width={1500}*/}
+      {/*  height={1500}*/}
+      {/*  className="select-none opacity-10 fixed top-0 left-0 w-full h-full object-center object-cover -z-10"*/}
+      {/*/>*/}
       <div>
         <div className={"flex flex-col items-center gap-8"}>
           <h1 className="flex flex-col items-center justify-center gap-1">
@@ -179,8 +177,8 @@ export default async function Home() {
                 "w-[40px] h-[40px] object-cover object-center rounded-full border-2"
               }
             />
-            <h1 className={cn(satisfy.className, "text-base lg:text-2xl")}>
-              Ararat Team
+            <h1 className={cn(oswald.className, "text-base lg:text-4xl")}>
+              ИВТиПТ
             </h1>
           </Link>
           <h5 className="text-sm lg:text-base">© Все права защищены.</h5>

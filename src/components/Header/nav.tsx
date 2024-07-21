@@ -1,10 +1,10 @@
 import React from "react";
-import Link from "next/link";
-import { ThemeToggleButton } from "@/components/ThemeToggleButton";
 import { SearchInput } from "@/components/Header/SearchInput";
 import { Notification } from "@prisma/client";
 import { MobileMenu } from "@/components/Header/MobileMenu";
 import { LoaderLink } from "@/components/LoaderLink";
+import { cn } from "@/lib/utils";
+import styles from "./header.module.scss";
 
 export const nav = [
   {
@@ -35,30 +35,33 @@ export const Nav = ({
 }) => {
   return (
     <>
-      <nav className="relative hidden lg:flex items-center gap-10 ">
-        <SearchInput />
-        <ThemeToggleButton />
+      <nav className="relative hidden lg:flex items-center gap-2">
         {nav.map(({ label, link, auth }) => {
           if (auth && !isAuth) return null;
           return (
-            <LoaderLink
+            <div
               key={link}
-              href={link}
-              className="relative text-sm font-semibold transition-all hover:text-destructive"
+              className={cn("px-4 transition-all", styles.link_wrapper)}
             >
-              {label}
-              {link === "/messenger" && !!messageNots?.length && (
-                <span
-                  className={
-                    "absolute top-0 right-0 -translate-y-2/3 translate-x-1/2 text-[12px]"
-                  }
-                >
-                  {messageNots.length}
-                </span>
-              )}
-            </LoaderLink>
+              <LoaderLink
+                href={link}
+                className={cn("relative text-sm font-semibold ", styles.link)}
+              >
+                {label}
+                {link === "/messenger" && !!messageNots?.length && (
+                  <span
+                    className={
+                      "absolute top-0 right-0 -translate-y-2/3 translate-x-1/2 text-[12px]"
+                    }
+                  >
+                    {messageNots.length}
+                  </span>
+                )}
+              </LoaderLink>
+            </div>
           );
         })}
+        <SearchInput />
       </nav>
       <MobileMenu isAuth={isAuth} messageNots={messageNots} />
     </>

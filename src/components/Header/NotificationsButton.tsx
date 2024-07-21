@@ -50,7 +50,7 @@ const NotificationsButton: FC<Props> = ({ nots, authUser }) => {
             setOpen((prev) => !prev);
           }}
         >
-          <Button className={"relative"} size={"icon"} variant={"outline"}>
+          <Button className={"relative"} size={"icon"} variant={"ghost"}>
             <Bell />
             {!!nots?.filter((not) => !not.seen).length && (
               <span
