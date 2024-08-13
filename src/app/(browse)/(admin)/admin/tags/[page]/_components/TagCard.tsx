@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { deleteTag } from "@/actions/users.actions";
 import { toast } from "sonner";
-import { LoaderLink } from "@/components/LoaderLink";
 
 interface Props {
   tag: Tag;
@@ -35,7 +34,7 @@ const TagCard: FC<Props> = ({ tag }) => {
         "flex items-center gap-4 py-2 px-4 bg-primary text-background rounded-xl"
       }
     >
-      <LoaderLink href={`/tag/${tag.id}`}>{tag.name}</LoaderLink>
+      <Link href={`/tag/${tag.id}`}>{tag.name}</Link>
       <Button
         disabled={isPending}
         onClick={deleteHandler}

@@ -67,7 +67,11 @@ const FollowButton: FC<Props> = ({ user, isAuth, isFollow, authUser }) => {
   };
 
   return (
-    <Button disabled={isPending || user.banned} onClick={submitHandler}>
+    <Button
+      size={"icon"}
+      disabled={isPending || user.banned}
+      onClick={submitHandler}
+    >
       {/*{!isFollow ? "Подписаться" : "Отписаться"}*/}
       {!isFollow ? <UserPlus /> : <UserMinus />}
     </Button>

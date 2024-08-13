@@ -1,0 +1,26 @@
+.first,
+.third {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: 105%;
+    height: 105%;
+    transform-origin: center;
+    @apply bg-gradient-to-r from-fuchsia-600 to-purple-600;
+    transform: rotate(1deg) translate3d(-50%, -50%, 0);
+  }
+}
+
+.third {
+  &::before {
+    @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+    transform: rotate(-2deg) translate3d(-50%, -50%, 0);
+  }
+}
+
+.main_text {
+}

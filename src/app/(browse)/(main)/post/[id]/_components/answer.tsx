@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { Trash } from "lucide-react";
 import Link from "next/link";
 import { CreateAnswerForm } from "@/app/(browse)/(main)/post/[id]/_components/createAnswerForm";
-import { LoaderLink } from "@/components/LoaderLink";
 
 interface Props {
   answer: Comment & { author: User };
@@ -31,17 +30,17 @@ const Answer: FC<Props> = ({ user, answer }) => {
   };
 
   return (
-    <div className="ml-[30px] lg:ml-[50px] relative flex flex-col gap-3 p-3 pt-8 lg:pt-3 rounded-xl bg-primary-foreground min-w-[95%] lg:min-w-[40%] w-max max-w-full">
+    <div className="ml-[30px] lg:ml-[50px] relative flex flex-col gap-3 p-3 pt-8 lg:pt-3 rounded-xl bg-primary-foreground min-w-[95%] lg:min-w-[80%] w-max max-w-full">
       <h5 className="absolute top-[10px] right-[10px] text-[12px] font-semibold">
         {new Date(answer.createdAt).toLocaleString()}
       </h5>
       <div className={"text-sm flex items-center gap-1"}>
-        <LoaderLink
+        <Link
           href={`/user/${answer.author.id}`}
           className={"underline font-semibold"}
         >
           {answer.author.name}
-        </LoaderLink>
+        </Link>
         <span>отвечает {answer.to}</span>
       </div>
 
@@ -51,9 +50,9 @@ const Answer: FC<Props> = ({ user, answer }) => {
           {user.id === answer.author.id && (
             <Button
               variant={"destructive"}
+              size={"icon"}
               disabled={isPending}
               onClick={clickHandler}
-              className={"w-max"}
             >
               <Trash />
             </Button>

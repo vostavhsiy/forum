@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { LoaderLink } from "@/components/LoaderLink";
 
 interface Props {
   page: number;
@@ -32,7 +31,7 @@ export const Pagination: FC<Props> = ({
           {page <= 1 ? (
             "Назад"
           ) : (
-            <LoaderLink
+            <Link
               href={
                 isQuery
                   ? `${baseLink}?page=${page - 1}&${search ? `search=${search}$` : ""}${filter ? `filter=${filter}` : ""}`
@@ -40,7 +39,7 @@ export const Pagination: FC<Props> = ({
               }
             >
               Назад
-            </LoaderLink>
+            </Link>
           )}
         </Button>
         <Button
@@ -50,7 +49,7 @@ export const Pagination: FC<Props> = ({
           {page >= Math.ceil(total / size) ? (
             "Вперед"
           ) : (
-            <LoaderLink
+            <Link
               href={
                 isQuery
                   ? `${baseLink}?page=${page + 1}&${search ? `search=${search}&` : ""}${filter ? `filter=${filter}` : ""}`
@@ -58,7 +57,7 @@ export const Pagination: FC<Props> = ({
               }
             >
               Вперед
-            </LoaderLink>
+            </Link>
           )}
         </Button>
       </div>

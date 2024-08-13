@@ -71,7 +71,7 @@ const TagPage: NextPage<Props> = async ({ params, searchParams }) => {
   });
 
   return (
-    <div className="flex flex-col gap-4 p-5">
+    <div className="flex flex-col gap-4 p-5 pr-8">
       <h1 className="text-lg font-semibold">
         Посты с тегом <span className="font-bold">{tag.name}</span>
       </h1>

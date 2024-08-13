@@ -7,9 +7,10 @@ import { Oswald } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { auth } from "@/actions/auth.actions";
 import { NotificationsButton } from "@/components/Header/NotificationsButton";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { ThemeToggleButton } from "@/components/ThemeToggleButton";
 import styles from "./header.module.scss";
+import Link from "next/link";
 
 const oswald = Oswald({ subsets: ["cyrillic"], weight: ["400", "600", "700"] });
 
@@ -23,10 +24,10 @@ export const Header = async () => {
   const otherNots = user?.notifications.filter((not) => not.type !== "message");
 
   return (
-    <header className="relative z-50 w-full bg-background flex items-center px-4 shadow-[0px_10px_10px_0px_rgba(0,0,0,.1)]">
+    <header className="fixed top-0 left-0 z-50 w-full bg-background/70 backdrop-blur flex items-center px-4 py-2 shadow-lg">
       <div className="max-w-[1130px] w-full lg:w-3/4 mx-auto flex items-center justify-between">
         <div className="flex items-center gap-3 lg:gap-8">
-          <LoaderLink
+          <a
             href={"/"}
             className={cn("flex items-center gap-6", styles.logo_link)}
           >
@@ -42,7 +43,7 @@ export const Header = async () => {
             <h1 className={cn(oswald.className, "text-3xl hidden lg:block")}>
               ИВТиПТ
             </h1>
-          </LoaderLink>
+          </a>
           {!user?.banned && <Nav isAuth={!!user} messageNots={messageNots} />}
         </div>
         <div className={"flex items-center gap-2 lg:gap-5"}>
@@ -60,7 +61,7 @@ export const Header = async () => {
               {" "}
               <ThemeToggleButton />{" "}
               <Button asChild variant={"outline"}>
-                <LoaderLink href={"/login"}>Войти</LoaderLink>
+                <Link href={"/login"}>Войти</Link>
               </Button>
             </>
           )}

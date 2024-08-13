@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FollowButton } from "@/components/FollowButton";
 import { getUserWithSubscribes } from "@/services/users.service";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { ImageWithFallback } from "@/components/FallbackImage";
 
 const ProfileSubscribesPage = async () => {
@@ -27,7 +27,7 @@ const ProfileSubscribesPage = async () => {
           {user.subscribes.map(({ subscribed: sub }) => {
             return (
               <div key={sub.id} className="flex justify-between items-center">
-                <LoaderLink
+                <Link
                   href={`/user/${sub.id}`}
                   className="flex items-center gap-5"
                 >
@@ -44,7 +44,7 @@ const ProfileSubscribesPage = async () => {
                       {sub.email}
                     </h3>
                   </div>
-                </LoaderLink>
+                </Link>
                 <FollowButton
                   user={sub}
                   isFollow={true}
@@ -56,12 +56,9 @@ const ProfileSubscribesPage = async () => {
           })}
         </div>
       ) : (
-        <LoaderLink
-          href={"/users/1"}
-          className={"text-destructive hover:underline"}
-        >
+        <Link href={"/users/1"} className={"text-destructive hover:underline"}>
           Найти интересных авторов
-        </LoaderLink>
+        </Link>
       )}
     </div>
   );

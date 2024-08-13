@@ -7,14 +7,9 @@ const ProfileLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="grid grid-rows-[1fr+12fr] lg:grid-cols-[1fr+7fr]">
+    <div className="grid lg:grid-cols-[1fr+7fr]">
       <Sidebar />
-      <div
-        style={{ height: "calc(100vh - 60px)" }}
-        className="overflow-auto mb-[100px] py-2 px-4 main-layout"
-      >
-        {children}
-      </div>
+      <div className="mb-[100px] py-2 pt-20 px-4">{children}</div>
     </div>
   );
 };

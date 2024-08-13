@@ -16,7 +16,7 @@ import { Tag } from "@prisma/client";
 import { toast } from "sonner";
 import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
 import { ends } from "@/lib/word-ends";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
@@ -69,7 +69,7 @@ const Post: FC<Props> = ({ post, auth, favourite, inBlog, inAdminPanel }) => {
   };
 
   return (
-    <div className="relative w-full p-5 rounded-2xl bg-primary-foreground flex flex-col gap-8">
+    <div className="relative w-full p-5 rounded-lg shadow bg-background flex flex-col gap-8">
       <div
         className={
           "absolute bottom-[5px] right-[10px] flex items-center gap-2 text-[12px]"
@@ -81,9 +81,9 @@ const Post: FC<Props> = ({ post, auth, favourite, inBlog, inAdminPanel }) => {
         </span>
         <span>{new Date(post.createdAt).toLocaleString()}</span>
       </div>
-      <div className="w-full flex flex-col-reverse lg:flex-row lg:items-center justify-between gap-2">
+      <div className="w-full flex flex-col-reverse lg:flex-row lg:items-start justify-between gap-2">
         <div className="flex flex-col gap-2">
-          <LoaderLink
+          <Link
             href={`/post/${post.id}`}
             className="text-base lg:text-xl"
             onClick={async () => {
@@ -91,7 +91,7 @@ const Post: FC<Props> = ({ post, auth, favourite, inBlog, inAdminPanel }) => {
             }}
           >
             {post.title}
-          </LoaderLink>
+          </Link>
           <h3 className="text-sm text-zinc-600">
             {post.text.slice(0, 200)}...
           </h3>
@@ -121,7 +121,7 @@ const Post: FC<Props> = ({ post, auth, favourite, inBlog, inAdminPanel }) => {
         </div>
       </div>
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12">
-        <LoaderLink
+        <Link
           href={
             post.author.id === auth ? "/profile" : `/user/${post.author.id}`
           }
@@ -138,17 +138,17 @@ const Post: FC<Props> = ({ post, auth, favourite, inBlog, inAdminPanel }) => {
             <h3 className="text-sm font-semibold">{post.author.name}</h3>
             <h4 className="text-[12px]">{post.author.email}</h4>
           </div>
-        </LoaderLink>
+        </Link>
         <div className="flex flex-wrap items-center gap-4 lg:w-[80%] mb-6 lg:mb-0">
           {post.tags.map((tag: Tag) => {
             return (
-              <LoaderLink
+              <Link
                 key={tag.id}
                 href={`/tag/${tag.id}`}
                 className="text-[12px] bg-primary text-background py-1 px-4 rounded-xl transition-all hover:text-white hover:bg-destructive"
               >
                 {tag.name}
-              </LoaderLink>
+              </Link>
             );
           })}
         </div>

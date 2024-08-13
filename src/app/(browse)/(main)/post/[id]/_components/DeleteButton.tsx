@@ -38,8 +38,8 @@ const DeleteButton: FC<Props> = ({ post, user }) => {
 
   return (
     <Button
-      size={"sm"}
-      variant={"destructive"}
+      size={"icon"}
+      variant={"outline"}
       disabled={isPending}
       onClick={deleteHandler}
     >

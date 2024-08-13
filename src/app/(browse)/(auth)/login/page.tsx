@@ -1,8 +1,8 @@
-import { GoogleButton } from "@/components/GoogleButton";
 import { LoginForm } from "@/app/(browse)/(auth)/_components/LoginForm";
 import { Separator } from "@/components/ui/separator";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { GithubButton } from "@/components/GithubButton";
+import Link from "next/link";
 
 const LoginPage = () => {
   return (
@@ -20,9 +20,14 @@ const LoginPage = () => {
       </div>
       <div className="mt-6">
         Нет даже аккаунта GitHub?{" "}
-        <LoaderLink href={"/signup"} className={"text-destructive"}>
+        <Link
+          href={"/signup"}
+          className={
+            "bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent font-semibold"
+          }
+        >
           Зарегистрируйтесь
-        </LoaderLink>
+        </Link>
       </div>
     </div>
   );

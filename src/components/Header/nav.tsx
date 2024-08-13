@@ -2,9 +2,10 @@ import React from "react";
 import { SearchInput } from "@/components/Header/SearchInput";
 import { Notification } from "@prisma/client";
 import { MobileMenu } from "@/components/Header/MobileMenu";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { cn } from "@/lib/utils";
 import styles from "./header.module.scss";
+import Link from "next/link";
 
 export const nav = [
   {
@@ -43,7 +44,7 @@ export const Nav = ({
               key={link}
               className={cn("px-4 transition-all", styles.link_wrapper)}
             >
-              <LoaderLink
+              <Link
                 href={link}
                 className={cn("relative text-sm font-semibold ", styles.link)}
               >
@@ -57,7 +58,7 @@ export const Nav = ({
                     {messageNots.length}
                   </span>
                 )}
-              </LoaderLink>
+              </Link>
             </div>
           );
         })}

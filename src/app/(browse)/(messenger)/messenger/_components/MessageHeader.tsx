@@ -6,7 +6,7 @@ import useOtherUser from "@/hooks/useOtherUser";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
@@ -51,7 +51,7 @@ const MessagesHeader: FC<Props> = ({ conversation }) => {
 
   return (
     <div className="w-full h-full flex items-center border-b-2 pb-2">
-      <LoaderLink href={`/user/${user.id}`} className="flex items-center gap-6">
+      <Link href={`/user/${user.id}`} className="flex items-center gap-6">
         <ImageWithFallback
           key={user.id}
           src={user.image || "/user.png"}
@@ -64,7 +64,7 @@ const MessagesHeader: FC<Props> = ({ conversation }) => {
           <h3 className="text-base font-semibold">{user.name}</h3>
           <h4 className="text-sm">{user.email}</h4>
         </div>
-      </LoaderLink>
+      </Link>
     </div>
   );
 };

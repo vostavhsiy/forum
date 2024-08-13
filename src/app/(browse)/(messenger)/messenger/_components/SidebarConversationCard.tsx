@@ -8,7 +8,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { ImageWithFallback } from "@/components/FallbackImage";
 
 interface Props {
@@ -82,7 +82,7 @@ const SidebarConversationCard: FC<Props> = ({ conversation }) => {
   }
 
   return (
-    <LoaderLink
+    <Link
       href={`/messenger/${conversation.id}`}
       className={cn(
         "flex items-center gap-3 p-2 rounded-xl",
@@ -117,7 +117,7 @@ const SidebarConversationCard: FC<Props> = ({ conversation }) => {
           </h4>
         )}
       </div>
-    </LoaderLink>
+    </Link>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { SignUpForm } from "@/app/(browse)/(auth)/_components/SignUpForm";
-import { LoaderLink } from "@/components/LoaderLink";
+import Link from "next/link";
 
 const SignUpPage = () => {
   return (
@@ -16,9 +16,14 @@ const SignUpPage = () => {
       </div>
       <div className="mt-6">
         Уже есть аккаунт?{" "}
-        <LoaderLink href={"/login"} className={"text-destructive"}>
+        <Link
+          href={"/login"}
+          className={
+            "bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent font-semibold"
+          }
+        >
           Войти
-        </LoaderLink>
+        </Link>
       </div>
     </div>
   );

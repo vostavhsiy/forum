@@ -9,7 +9,6 @@ import { Trash } from "lucide-react";
 import Link from "next/link";
 import { CreateAnswerForm } from "@/app/(browse)/(main)/post/[id]/_components/createAnswerForm";
 import { Answer } from "@/app/(browse)/(main)/post/[id]/_components/answer";
-import { LoaderLink } from "@/components/LoaderLink";
 
 interface Props {
   comment: Comment & { author: User; answers: IAnswer[] };
@@ -33,16 +32,16 @@ const Comment: FC<Props> = ({ user, comment }) => {
 
   return (
     <>
-      <div className="relative flex flex-col gap-3 p-3 pt-8 lg:pt-3 rounded-xl bg-primary-foreground min-w-[40%] w-max max-w-[95%] lg:max-w-full">
+      <div className="relative flex flex-col gap-3 p-3 pt-8 lg:pt-3 rounded-xl bg-primary-foreground min-w-[80%] w-max max-w-[95%] lg:max-w-full">
         <h5 className="absolute top-[10px] right-[10px] text-[12px] font-semibold">
           {new Date(comment.createdAt).toLocaleString()}
         </h5>
-        <LoaderLink
+        <Link
           href={`/user/${comment.author.id}`}
           className={"text-sm underline font-semibold"}
         >
           {comment.author.name}
-        </LoaderLink>
+        </Link>
         <p>{comment.text}</p>
         {user && (
           <div className="flex items-center justify-between gap-4">
@@ -57,7 +56,7 @@ const Comment: FC<Props> = ({ user, comment }) => {
                 variant={"destructive"}
                 disabled={isPending}
                 onClick={clickHandler}
-                className={"w-max"}
+                size={"icon"}
               >
                 <Trash />
               </Button>

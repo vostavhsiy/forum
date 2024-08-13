@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { deletePost } from "@/actions/blog.actions";
 import { toast } from "sonner";
-import { LoaderLink } from "@/components/LoaderLink";
 
 interface Props {
   post: Post;
@@ -34,9 +33,9 @@ const PostCard: FC<Props> = ({ post }) => {
       className="flex items-center justify-between py-2 px-5 rounded-xl bg-primary-foreground"
     >
       <div className="flex flex-col gap-1">
-        <LoaderLink className={"font-semibold"} href={`/posts/${post.id}`}>
+        <Link className={"font-semibold"} href={`/posts/${post.id}`}>
           {post.title}
-        </LoaderLink>
+        </Link>
         <h3 className="text-sm text-zinc-600">{post.text.slice(0, 200)}...</h3>
       </div>
       <Button

@@ -193,7 +193,7 @@ const CreatePostForm: FC<Props> = ({ tags }) => {
                 disabled={isPending}
                 type={"submit"}
                 size={"lg"}
-                className={"text-lg w-full mt-5"}
+                className={"text-lg w-full mt-5 py-4"}
               >
                 Создать пост
               </Button>

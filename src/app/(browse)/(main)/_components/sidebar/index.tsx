@@ -2,39 +2,23 @@ import {
   getRecommendedPosts,
   getRecommendedUsers,
 } from "@/actions/blog.actions";
-import Link from "next/link";
-import Image from "next/image";
-import { PostCard } from "@/app/(browse)/(main)/_components/sidebar/PostCard";
-import { LoaderLink } from "@/components/LoaderLink";
-import { ImageWithFallback } from "@/components/FallbackImage";
 
-const usefulLinks = [
-  {
-    link: "/",
-    label: "Южный федеральный университет",
-    image: "",
-  },
-  {
-    link: "/",
-    label: "ИВТиПТ",
-    image: "",
-  },
-  {
-    link: "/",
-    label: "Команда",
-    image: "",
-  },
-];
+import { PostCard } from "@/app/(browse)/(main)/_components/sidebar/PostCard";
+
+import { ImageWithFallback } from "@/components/FallbackImage";
+import Link from "next/link";
 
 const Sidebar = async () => {
   const recommendedPosts = await getRecommendedPosts();
   const recommendedUsers = await getRecommendedUsers();
 
   return (
-    <div className="hidden w-full border-r-2 lg:flex flex-col py-2 px-4 items-start gap-10 pt-5 overflow-auto">
+    <div className="hidden fixed top-10 left-[50%] -translate-x-1/2 w-full max-w-[1300px] px-4 lg:flex flex-col py-2 pt-20 items-end gap-5 overflow-auto">
       {!!recommendedPosts?.length && (
-        <div className="flex flex-col gap-3">
-          <h2 className="text-base font-semibold">Популярные посты</h2>
+        <div className="w-96 shadow flex flex-col gap-5 p-4 bg-background rounded-lg">
+          <h2 className="text-base font-semibold text-center uppercase">
+            Популярные посты
+          </h2>
           <div className="flex flex-col gap-2 pl-2">
             {recommendedPosts.map((post) => {
               return <PostCard key={post.id} post={post} />;
@@ -43,12 +27,14 @@ const Sidebar = async () => {
         </div>
       )}
       {!!recommendedUsers?.length && (
-        <div className="flex flex-col gap-3">
-          <h2 className="text-base font-semibold">Популярные авторы</h2>
+        <div className="w-96 shadow flex flex-col gap-5 p-4 bg-background rounded-lg">
+          <h2 className="text-base font-semibold text-center uppercase">
+            Популярные авторы
+          </h2>
           <div className="flex flex-col gap-4 pl-2">
             {recommendedUsers.map((user) => {
               return (
-                <LoaderLink
+                <Link
                   href={`/user/${user.id}`}
                   key={user.id}
                   className="flex items-center gap-2"
@@ -64,7 +50,7 @@ const Sidebar = async () => {
                     <h3 className="text-sm font-semibold">{user.name}</h3>
                     <h4 className="text-[12px]">{user.email}</h4>
                   </div>
-                </LoaderLink>
+                </Link>
               );
             })}
           </div>

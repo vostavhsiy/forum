@@ -7,7 +7,7 @@ import { Pagination } from "@/components/Pagination";
 import Link from "next/link";
 import { getTags } from "@/services/tags.service";
 import { auth } from "@/actions/auth.actions";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import notFound from "@/app/not-found";
 
 interface Props {
@@ -41,19 +41,19 @@ const TagsPage: NextPage<Props> = async ({ params, searchParams }) => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 pr-8">
       <h1 className="text-lg font-semibold">Теги</h1>
       {!!tags.length ? (
         <div className="flex items-center flex-wrap gap-5">
           {tags.map((tag) => {
             return (
-              <LoaderLink
+              <Link
                 key={tag.id}
                 href={`/tag/${tag.id}`}
                 className="py-2 px-4 bg-primary text-background transition-all hover:bg-destructive rounded-full"
               >
                 {tag.name}
-              </LoaderLink>
+              </Link>
             );
           })}
         </div>

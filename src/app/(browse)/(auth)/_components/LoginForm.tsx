@@ -9,7 +9,6 @@ import { useTransition } from "react";
 import { revalidate } from "@/actions/auth.actions";
 import { toast } from "sonner";
 import Link from "next/link";
-import { LoaderLink } from "@/components/LoaderLink";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -78,12 +77,12 @@ export const LoginForm = () => {
       </Formik>
       <Button
         onClick={clickHandler}
-        variant={"outline"}
+        variant={"link"}
         size={"lg"}
         className="w-[80%] flex mx-auto text-base mt-4"
         asChild
       >
-        <LoaderLink href={"/login/update"}>Забыли пароль?</LoaderLink>
+        <Link href={"/login/update"}>Забыли пароль?</Link>
       </Button>
     </>
   );

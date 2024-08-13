@@ -670,6 +670,7 @@ export const getRecommendedPosts = async () => {
       take: 3,
       include: {
         author: true,
+        tags: true,
       },
     });
     return posts;

@@ -9,7 +9,6 @@ import { Notification } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LoaderLink } from "@/components/LoaderLink";
 
 const MobileMenu = ({
   isAuth,
@@ -38,7 +37,7 @@ const MobileMenu = ({
         {nav.map(({ label, link, auth }) => {
           if (auth && !isAuth) return null;
           return (
-            <LoaderLink
+            <Link
               key={link}
               href={link}
               className="relative text-lg font-semibold transition-all hover:text-destructive"
@@ -59,7 +58,7 @@ const MobileMenu = ({
                   {messageNots.length}
                 </span>
               )}
-            </LoaderLink>
+            </Link>
           );
         })}
         <div className="flex items-center justify-center gap-2">

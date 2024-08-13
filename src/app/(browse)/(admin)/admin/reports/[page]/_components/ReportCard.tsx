@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { deleteReport } from "@/actions/users.actions";
 import { toast } from "sonner";
-import { LoaderLink } from "@/components/LoaderLink";
 
 interface Props {
   report: Report & { post: Post; author: User };
@@ -47,16 +46,16 @@ const ReportCard: FC<Props> = ({ report }) => {
       </div>
       <h3 className={"text-sm font-semibold flex items-center gap-2"}>
         <span>Репорт от</span>
-        <LoaderLink href={`/user/${report.author.id}`} className={"underline"}>
+        <Link href={`/user/${report.author.id}`} className={"underline"}>
           {report.author.name}
-        </LoaderLink>
+        </Link>
       </h3>
       <p>{report.text}</p>
       <div className={"text-sm"}>
         Пост:{" "}
-        <LoaderLink href={`/post/${report.post.id}`} className={"underline"}>
+        <Link href={`/post/${report.post.id}`} className={"underline"}>
           {report.post.title}
-        </LoaderLink>
+        </Link>
       </div>
     </div>
   );

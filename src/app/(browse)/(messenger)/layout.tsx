@@ -7,11 +7,9 @@ const MessengerLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="grid h-full grid-rows-[1fr+5fr] lg:grid-cols-[1fr+5fr]">
+    <div className="grid h-screen lg:grid-cols-[1fr+5fr]">
       <Sidebar />
-      <div className="py-2 px-4" style={{ height: "calc(100vh - 60px)" }}>
-        {children}
-      </div>
+      <div className="py-2 px-4 h-screen pt-20">{children}</div>
     </div>
   );
 };

@@ -19,9 +19,7 @@ const AdminLayout = async ({
   return (
     <div className="h-full grid grid-cols-[1fr+7fr]">
       <Sidebar />
-      <div className="h-full overflow-auto mb-[100px] py-2 px-4">
-        {children}
-      </div>
+      <div className="h-full mb-[100px] py-2 pt-20 px-4">{children}</div>
     </div>
   );
 };

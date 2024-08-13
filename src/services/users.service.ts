@@ -40,6 +40,7 @@ export const getUsers = async (
                 },
       include: {
         subscribers: true,
+        subscribes: true,
       },
     });
 

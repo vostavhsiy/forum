@@ -9,7 +9,7 @@ import Link from "next/link";
 import { FollowButton } from "@/components/FollowButton";
 import { getUserById } from "@/services/users.service";
 import { auth } from "@/actions/auth.actions";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { ImageWithFallback } from "@/components/FallbackImage";
 
 export default async function ProfilePage() {
@@ -39,7 +39,7 @@ export default async function ProfilePage() {
       </div>
       <div className="w-full flex flex-col lg:flex-row items-start gap-10">
         <div className="flex flex-col gap-5  w-full lg:w-1/2 p-4 bg-primary-foreground rounded-2xl">
-          <LoaderLink
+          <Link
             href={"/profile/subscribes"}
             className="font-semibold text-lg hover:underline flex items-center gap-2"
           >
@@ -49,7 +49,7 @@ export default async function ProfilePage() {
                 {user.subscribes.length}
               </span>
             )}
-          </LoaderLink>
+          </Link>
           {!!user.subscribes.length ? (
             <div className="flex flex-col gap-3">
               {user.subscribes.slice(0, 3).map(({ subscribed: sub }) => {
@@ -58,7 +58,7 @@ export default async function ProfilePage() {
                     key={sub.id}
                     className="flex justify-between items-center"
                   >
-                    <LoaderLink
+                    <Link
                       href={`/user/${sub.id}`}
                       className="flex items-center gap-5"
                     >
@@ -73,7 +73,7 @@ export default async function ProfilePage() {
                         <h3 className="text-base font-semibold">{sub.name}</h3>
                         <h3 className="text-sm text-zinc-600">{sub.email}</h3>
                       </div>
-                    </LoaderLink>
+                    </Link>
                     <FollowButton
                       user={sub}
                       isFollow={true}
@@ -85,16 +85,16 @@ export default async function ProfilePage() {
               })}
             </div>
           ) : (
-            <LoaderLink
+            <Link
               href={"/users/1"}
               className={"text-destructive hover:underline"}
             >
               Найти интересных авторов
-            </LoaderLink>
+            </Link>
           )}
         </div>
         <div className="flex flex-col gap-5 w-full lg:w-1/2 p-4 bg-primary-foreground rounded-2xl">
-          <LoaderLink
+          <Link
             href={"/profile/subscribers"}
             className="font-semibold text-lg hover:underline flex items-center gap-2"
           >
@@ -104,7 +104,7 @@ export default async function ProfilePage() {
                 {user.subscribers.length}
               </span>
             )}
-          </LoaderLink>
+          </Link>
           {!!user.subscribers.length ? (
             <div className="flex flex-col gap-3">
               {user.subscribers.slice(0, 3).map(({ subscriber: sub }) => {
@@ -113,7 +113,7 @@ export default async function ProfilePage() {
                     key={sub.id}
                     className="flex justify-between items-center"
                   >
-                    <LoaderLink
+                    <Link
                       href={`/user/${sub.id}`}
                       className="flex items-center gap-5"
                     >
@@ -128,7 +128,7 @@ export default async function ProfilePage() {
                         <h3 className="text-base font-semibold">{sub.name}</h3>
                         <h3 className="text-sm text-zinc-600">{sub.email}</h3>
                       </div>
-                    </LoaderLink>
+                    </Link>
                   </div>
                 );
               })}

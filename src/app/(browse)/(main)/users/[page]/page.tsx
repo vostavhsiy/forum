@@ -23,7 +23,7 @@ interface Props {
 const UsersPage: NextPage<Props> = async ({ params, searchParams }) => {
   const authUser = await auth();
   const page = params.page ? +params.page - 1 : 0;
-  const size = +(searchParams.size || 8);
+  const size = +(searchParams.size || 30);
   const filter = searchParams.filter;
 
   if (isNaN(page)) {
@@ -42,13 +42,13 @@ const UsersPage: NextPage<Props> = async ({ params, searchParams }) => {
   }
 
   return (
-    <div className="flex flex-col gap-5 ">
+    <div className="flex flex-col gap-5 pr-8">
       <div className="flex items-center justify-between gap-2">
         <h1 className="text-lg font-semibold">Пользователи</h1>
         <Filter filter={filter} />
       </div>
       {!!users.length ? (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+        <div className="my-4 grid grid-cols-1 lg:grid-cols-3 gap-10">
           {users.map((user) => {
             const isFollow = !!user.subscribers.find(
               (u) => u.subscriberId === authUser?.id,

@@ -7,11 +7,11 @@ const MainLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="grid h-full grid-cols-1 lg:grid-cols-[1fr+5fr]">
-      <Sidebar />
-      <div className="h-full overflow-auto py-2 px-4 main-layout">
+    <div className="max-w-[1400px] mx-auto h-full grid gap-5 grid-cols-[5fr_2fr] px-4">
+      <div className="relative z-[1] h-full py-2 px-4 pt-20 main-layout">
         {children}
       </div>
+      <Sidebar />
     </div>
   );
 };

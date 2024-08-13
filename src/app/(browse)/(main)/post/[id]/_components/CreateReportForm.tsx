@@ -29,7 +29,7 @@ const CreateReportForm: FC<Props> = ({ post }) => {
     <div>
       <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
         <DialogTrigger asChild>
-          <Button size={"sm"} variant={"destructive"}>
+          <Button variant={"outline"} size={"icon"}>
             <AlertTriangle />
           </Button>
         </DialogTrigger>

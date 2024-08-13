@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { Post } from "@/app/(browse)/(main)/blog/_components/post";
 import Link from "next/link";
 import { getUserById } from "@/services/users.service";
-import { LoaderLink } from "@/components/LoaderLink";
 
 const ProfilePostsPage = async () => {
   const session = await getServerSession(authConfig);
@@ -34,12 +33,9 @@ const ProfilePostsPage = async () => {
           })}
         </div>
       ) : (
-        <LoaderLink
-          href={"/profile"}
-          className={"text-destructive hover:underline"}
-        >
+        <Link href={"/profile"} className={"text-destructive hover:underline"}>
           Добавить посты
-        </LoaderLink>
+        </Link>
       )}
     </div>
   );

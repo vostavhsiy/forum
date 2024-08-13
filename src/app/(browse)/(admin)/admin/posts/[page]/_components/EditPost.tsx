@@ -14,7 +14,7 @@ import {
 import { toast } from "sonner";
 import { Post, Tag } from "@prisma/client";
 import { Input } from "@/components/ui/input";
-import { Check, Plus, Trash, X } from "lucide-react";
+import { Check, Plus, Settings, Trash, X } from "lucide-react";
 import { socket } from "@/components/Notifications";
 
 interface Props {
@@ -83,7 +83,9 @@ const EditPostForm: FC<Props> = ({ post }) => {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="outline">Редактировать</Button>
+        <Button variant="outline" size={"icon"}>
+          <Settings />
+        </Button>
       </DialogTrigger>
       <DialogContent className="w-[80%] h-[80%] max-w-screen-lg flex flex-col gap-5">
         <h2 className={"font-semibold"}>Редактирование поста</h2>

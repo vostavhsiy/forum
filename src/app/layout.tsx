@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { Notifications } from "@/components/Notifications";
 import { auth } from "@/actions/auth.actions";
+import Link from "next/link";
+import { Cog } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,12 +29,12 @@ export default async function RootLayout({
       <body
         className={cn(
           inter.className,
-          "grid grid-rows-[60px+1fr] h-screen overflow-hidden text-primary",
+          "text-primary bg-gray-100 dark:bg-neutral-900",
         )}
       >
         <Providers>
           <Header />
-          <main style={{ height: "calc(100vh - 60px)" }}>
+          <main>
             {!user?.banned ? (
               children
             ) : (
@@ -50,6 +52,16 @@ export default async function RootLayout({
               <Toaster closeButton={true} richColors={true} duration={2000} />
               {user && <Notifications id={user.id} />}
             </>
+          )}
+          {user && ["admin", "editor"].includes(user.role) && (
+            <a
+              href={"/admin"}
+              className={
+                "fixed bottom-4 left-4 w-[50px] aspect-square flex items-center justify-center rounded-full bg-gradient-to-r from-indigo-400 to-cyan-400 text-white"
+              }
+            >
+              <Cog />
+            </a>
           )}
         </Providers>
       </body>

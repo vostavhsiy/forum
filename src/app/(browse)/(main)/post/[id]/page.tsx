@@ -3,18 +3,17 @@ import { notFound } from "next/navigation";
 import { auth } from "@/actions/auth.actions";
 import { CreateCommentForm } from "@/app/(browse)/(main)/post/[id]/_components/createCommentForm";
 import { Comment } from "@/app/(browse)/(main)/post/[id]/_components/comment";
-import Link from "next/link";
-import Image from "next/image";
-import React from "react";
 import { CreateReportForm } from "@/app/(browse)/(main)/post/[id]/_components/CreateReportForm";
 import { getPostForPostPage } from "@/services/posts.service";
 import { ends } from "@/lib/word-ends";
 import { addPostView } from "@/actions/blog.actions";
-import { LoaderLink } from "@/components/LoaderLink";
+
 import { EditPostForm } from "@/app/(browse)/(admin)/admin/posts/[page]/_components/EditPost";
 import { DeleteButton } from "@/app/(browse)/(main)/post/[id]/_components/DeleteButton";
 import { ImageWithFallback } from "@/components/FallbackImage";
 import { PostText } from "@/app/(browse)/(main)/post/[id]/_components/PostText";
+import { Eye } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   params: {
@@ -34,33 +33,33 @@ const PostPage: NextPage<Props> = async ({ params }) => {
 
   const text = post.text
     .split(/\r\n|\r|\n/g)
-    .map((p) => (p ? p : "<br/>"))
-    .join("");
+    .map((p) => (p ? p : "<br/><br/>"))
+    .reduce((acc, elem) => {
+      if (
+        !elem.includes("<br/>") &&
+        !acc.slice(-"<br/><br/>".length).includes("<br/>")
+      )
+        acc += "<br/>";
+      acc += elem;
+      return acc;
+    });
 
   return (
-    <div className="relative p-4 pt-12 mb-[100px] flex flex-col gap-10">
+    <div className="relative p-10 pt-12 mb-[100px] flex flex-col gap-10">
       <div
         className={
-          "absolute top-[10px] right-[10px] flex items-center gap-8 text-[10px] lg:text-sm font-semibold"
+          "fixed top-[4.4rem] left-[50%] -translate-x-1/2 w-full max-w-[1300px] px-4 flex items-center justify-end gap-2 text-[10px] lg:text-sm font-semibold"
         }
       >
         {user &&
           (["admin", "editor"].includes(user.role) ||
             post.userId === user.id) && <EditPostForm post={post} />}
+        {user && <CreateReportForm post={post} />}
         {user && ["admin", "editor"].includes(user.role) && (
           <DeleteButton post={post} user={user} />
         )}
-        {user && <CreateReportForm post={post} />}
-        <div className={"flex items-center gap-2"}>
-          <span>
-            {post.views}{" "}
-            {ends(post.views, ["просмотр", "просмотра", "просмотров"])}
-          </span>
-          <span>{new Date(post.createdAt).toLocaleString()}</span>
-        </div>
       </div>
-      <div className="flex flex-col gap-8 mt-6">
-        <h1 className="text-xl font-semibold">{post.title}</h1>
+      <div className="flex flex-col gap-8">
         {post.image && (
           <div className="w-full flex justify-center items-center">
             <ImageWithFallback
@@ -69,12 +68,15 @@ const PostPage: NextPage<Props> = async ({ params }) => {
               alt={"post"}
               width={1000}
               height={1000}
-              className={"max-w-[80%] min-w-[50%]"}
+              className={
+                "max-w-[100%] aspect-video object-cover object-center min-w-[50%]"
+              }
             />
           </div>
         )}
+        <h1 className="text-xl font-semibold">{post.title}</h1>
         <PostText text={text} />
-        <LoaderLink
+        <Link
           href={`/user/${post.author.id}`}
           className="flex items-center gap-5"
         >
@@ -89,17 +91,29 @@ const PostPage: NextPage<Props> = async ({ params }) => {
             <h3 className="text-base font-semibold">{post.author.name}</h3>
             <h3 className="text-sm text-zinc-600">{post.author.email}</h3>
           </div>
-        </LoaderLink>
+        </Link>
+        <div className={"flex flex-col gap-8"}>
+          <span className={"text-lg font-semibold"}>
+            {new Date(post.createdAt).toLocaleString()}
+          </span>
+          <div className={"flex items-center gap-2"}>
+            <Eye />
+            <span>
+              {post.views}{" "}
+              {ends(post.views, ["просмотр", "просмотра", "просмотров"])}
+            </span>
+          </div>
+        </div>
         <div className="flex items-center flex-wrap gap-4">
           {post.tags.map((tag) => {
             return (
-              <LoaderLink
+              <Link
                 key={tag.id}
                 href={`/tag/${tag.id}`}
                 className="text-[12px] bg-primary text-background py-1 px-4 rounded-xl transition-all hover:text-white hover:bg-destructive"
               >
                 {tag.name}
-              </LoaderLink>
+              </Link>
             );
           })}
         </div>
