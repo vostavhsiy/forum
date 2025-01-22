@@ -1,8 +1,8 @@
+import { cn } from "@/lib/utils";
 import { Facebook, Github, Instagram } from "lucide-react";
+import { Oswald } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { Oswald } from "next/font/google";
 
 interface Props {
   auth?: boolean;
@@ -30,13 +30,11 @@ export function Footer({ auth }: Props) {
             </div>
             <Link
               className="text-2xl font-bold underline"
-              href={"tel: +7(951)7893502"}
+              href={"tel: +7(863)2434811"}
             >
-              +7 (951) 789 35 02
+              +7 (863) 243-48-11
             </Link>
-            <h3 className="text-base font-semibold">
-              atoyanrobert21@gmail.com
-            </h3>
+            <h3 className="text-base font-semibold">ivtipt@gmail.com</h3>
           </div>
           <div className="mt-[14px] w-1/2 flex flex-col gap-12">
             <h3 className="font-semibold text-xl">Быстрые ссылки</h3>
@@ -54,14 +52,14 @@ export function Footer({ auth }: Props) {
               <Link
                 target="_blank"
                 className="flex items-center justify-center w-[50px] aspect-square border-[2px] rounded-full border-gray-600/50"
-                href={"https://github.com/RockyAtoyan"}
+                href={"https://github.com"}
               >
                 <Github />
               </Link>
               <Link
                 target="_blank"
                 className="flex items-center justify-center w-[50px] aspect-square border-[2px] rounded-full border-gray-600/50"
-                href={"https://www.instagram.com/rocky.atoyan"}
+                href={"https://www.instagram.com"}
               >
                 <Instagram />
               </Link>
