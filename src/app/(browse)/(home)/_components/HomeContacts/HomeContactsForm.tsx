@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 export const HomeContactsForm = () => {
   const form = useRef<any>();
+
+  const [isPending, setIsPending] = useState(false);
 
   useGSAP(
     () => {
@@ -47,6 +49,14 @@ export const HomeContactsForm = () => {
             toast.error("Заполните все поля!");
             return;
           }
+          setIsPending(true);
+          setTimeout(() => {
+            toast.success(
+              "Спасибо за обращение! Мы свяжемся с вами в ближайшее время.",
+            );
+            formikHelpers.resetForm();
+            setIsPending(false);
+          });
         }}
       >
         {({}) => (
@@ -116,7 +126,11 @@ export const HomeContactsForm = () => {
                 placeholder={"Ваше сообщение"}
               />
             </label>
-            <Button type={"submit"} className={"w-max z-[1]"}>
+            <Button
+              disabled={isPending}
+              type={"submit"}
+              className={"w-max z-[1]"}
+            >
               Отправить
             </Button>
             <Image
