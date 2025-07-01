@@ -47,7 +47,7 @@ export const HomeContacts = () => {
             Вы можете связаться с нами по любым вопросам!
           </p>
           <div className={"mb-32 flex flex-col gap-5 font-semibold"}>
-            <a href={"tel:+77777777777"} className={"flex items-center gap-4"}>
+            <a href={"tel:+78632434811"} className={"flex items-center gap-4"}>
               <Phone />
               <span>+7 863 243 48 11</span>
             </a>
