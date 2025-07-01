@@ -56,7 +56,7 @@ export const HomeContactsForm = () => {
             );
             formikHelpers.resetForm();
             setIsPending(false);
-          });
+          }, 1000);
         }}
       >
         {({}) => (
