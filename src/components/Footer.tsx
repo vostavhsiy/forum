@@ -72,7 +72,7 @@ export function Footer({ auth }: Props) {
               </Link>
             </div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-lg">
-              The product of{" "}
+              Продукт{" "}
               <span className="font-bold bg-gradient-to-r from-fuchsia-500 to-cyan-500 bg-clip-text text-transparent">
                 ИВТиПТ
               </span>
