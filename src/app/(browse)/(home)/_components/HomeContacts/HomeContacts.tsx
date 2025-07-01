@@ -49,7 +49,7 @@ export const HomeContacts = () => {
           <div className={"mb-32 flex flex-col gap-5 font-semibold"}>
             <a href={"tel:+77777777777"} className={"flex items-center gap-4"}>
               <Phone />
-              <span>+7 777 777 77 77</span>
+              <span>+7 863 243 48 11</span>
             </a>
             <a
               href={"mailto:ivtipt@sfedu.ru"}
